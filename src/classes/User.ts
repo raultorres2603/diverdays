@@ -26,6 +26,7 @@ export default class User {
   }
 
   async comprobUser() {
+    const loadComp = toast.loading("Iniciando sesión...");
     try {
       const compU = await fetch(`${import.meta.env.VITE_H}/users/compUser`, {
         method: "POST",
@@ -48,6 +49,8 @@ export default class User {
           toast.error("Error al iniciar sesión");
           break;
       }
+    } finally {
+      toast.dismiss(loadComp);
     }
   }
 }
