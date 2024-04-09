@@ -55,7 +55,7 @@ export const Login = () => {
               </svg>
               <div className="grid grid-cols-1 gap-4">
                 <button
-                  className="text-3xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
+                  className="text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
                   onClick={() => {
                     createUser(email, pass);
                   }}
