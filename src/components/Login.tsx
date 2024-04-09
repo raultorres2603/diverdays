@@ -31,7 +31,7 @@ export const Login = () => {
             />
           </div>
 
-          {email && (
+          {/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) && (
             <>
               <svg className="animate-pulse w-100 h-14 self-center">
                 <ArrowDownCircleIcon className="text-indigo-500" />
