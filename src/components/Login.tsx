@@ -48,7 +48,7 @@ export const Login = () => {
               </div>
             </>
           )}
-          {pass.trim().length > 8 && (
+          {pass.trim().length >= 8 && (
             <>
               <svg className="animate-pulse w-100 h-14 self-center">
                 <ArrowDownCircleIcon className="text-indigo-500" />
