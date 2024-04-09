@@ -6,7 +6,7 @@ export default class User {
 
   constructor(public vEmail: string, public vPass: string) {
     this._email = vEmail;
-    this._pass = md5(import.meta.env.VITE_SK + vPass).toString();
+    this._pass = vPass;
   }
 
   get email() {
@@ -22,7 +22,7 @@ export default class User {
   }
 
   set pass(vPass: string) {
-    this._pass = vPass;
+    this._pass = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 
   async comprobUser() {
