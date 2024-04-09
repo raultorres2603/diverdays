@@ -17,17 +17,17 @@ export const Login = () => {
 
   return (
     <div className="login">
-      <h1 className="text-6xl font-bold text-indigo-300">DiverAPP</h1>
+      <h1 className="text-7xl font-bold text-indigo-300">DiverAPP</h1>
       <div className="snap-x snap-mandatory">
         <div className="grid grid-rows-1 gap-4 mt-9">
           <div className="snap-always snap-center">
             <input
               type="email"
-              className="form-control text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+              id={"email"}
+              className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
               onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
               placeholder="Email"
               name=""
-              id=""
             />
           </div>
 
@@ -39,11 +39,11 @@ export const Login = () => {
               <div className="snap-always snap-center">
                 <input
                   type="password"
-                  className="form-control text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+                  id={"pass"}
+                  className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
                   onInput={(e) => setPass((e.target as HTMLInputElement).value)}
                   placeholder="Password"
                   name=""
-                  id=""
                 />
               </div>
             </>
@@ -55,7 +55,7 @@ export const Login = () => {
               </svg>
               <div className="grid grid-cols-1 gap-4">
                 <button
-                  className="text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
+                  className="text-3xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
                   onClick={() => {
                     createUser(email, pass);
                   }}

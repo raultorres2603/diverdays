@@ -7,6 +7,9 @@ function App() {
     <>
       <Login />
       <Toaster />
+      <div className="fixed bottom-3 left-50 text-md">
+        © 2024 raultorres - All rights reserved
+      </div>
     </>
   );
 }
