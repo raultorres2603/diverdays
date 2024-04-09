@@ -8,7 +8,11 @@ export const Login = () => {
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
-    await u.comprobUser();
+    try {
+      await u.comprobUser();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
