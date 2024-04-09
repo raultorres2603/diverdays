@@ -1,0 +1,68 @@
+import { useState } from "react";
+import User from "../classes/User";
+import { ArrowDownCircleIcon } from "@heroicons/react/16/solid";
+
+export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  const createUser = async (email: string, pass: string) => {
+    const u = new User(email, pass);
+    await u.comprobUser();
+  };
+
+  return (
+    <div className="login">
+      <h1 className="text-6xl font-bold text-indigo-300">DiverAPP</h1>
+      <div className="snap-x snap-mandatory">
+        <div className="grid grid-rows-1 gap-4 mt-9">
+          <div className="snap-always snap-center">
+            <input
+              type="email"
+              className="form-control text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+              onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+              placeholder="Email"
+              name=""
+              id=""
+            />
+          </div>
+
+          {email && (
+            <>
+              <svg className="animate-pulse w-100 h-14 self-center">
+                <ArrowDownCircleIcon className="text-indigo-500" />
+              </svg>
+              <div className="snap-always snap-center">
+                <input
+                  type="password"
+                  className="form-control text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+                  onInput={(e) => setPass((e.target as HTMLInputElement).value)}
+                  placeholder="Password"
+                  name=""
+                  id=""
+                />
+              </div>
+            </>
+          )}
+          {pass && (
+            <>
+              <svg className="animate-pulse w-100 h-14 self-center">
+                <ArrowDownCircleIcon className="text-indigo-500" />
+              </svg>
+              <div className="grid grid-cols-1 gap-4">
+                <button
+                  className="text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
+                  onClick={() => {
+                    createUser(email, pass);
+                  }}
+                >
+                  Entrar
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
