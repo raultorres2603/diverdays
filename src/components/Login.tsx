@@ -24,7 +24,7 @@ export const Login = () => {
             <input
               type="email"
               id={"email"}
-              className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+              className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg"
               onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
               placeholder="Email"
               name=""
@@ -40,7 +40,7 @@ export const Login = () => {
                 <input
                   type="password"
                   id={"pass"}
-                  className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg"
+                  className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg"
                   onInput={(e) => setPass((e.target as HTMLInputElement).value)}
                   placeholder="Password"
                   name=""
@@ -55,7 +55,7 @@ export const Login = () => {
               </svg>
               <div className="grid grid-cols-1 gap-4">
                 <button
-                  className="text-2xl transition ease-in-out focus:scale-110 hover:scale-110 text-white bg-indigo-500 rounded-lg w-100"
+                  className="text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg w-100"
                   onClick={() => {
                     createUser(email, pass);
                   }}
