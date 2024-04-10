@@ -25,7 +25,7 @@ export default class User {
     this._pass = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 
-  async comprobUser(): Promise<void> {
+  async comprobUser(): Promise<"IEP" | string | "ERR"> {
     const loadComp = toast.loading("Iniciando sesión...");
     try {
       const compU = await fetch(`${import.meta.env.VITE_H}/users/compUser`, {
@@ -42,11 +42,14 @@ export default class User {
       console.log(response);
       if (response.res == "IEP") {
         toast.error("Email o contraseña incorrectos");
+        return "IEP";
       } else {
         toast.success("Sesión iniciada");
+        return response.res;
       }
     } catch (error) {
       toast.error("Error al iniciar sesión");
+      return "ERR";
     } finally {
       toast.dismiss(loadComp);
     }

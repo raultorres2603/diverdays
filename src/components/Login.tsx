@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import User from "../classes/User";
 import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
+import { mContext } from "../contexts/MainContext";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [loginIn, setLoginIn] = useState(false);
+  const { setSession } = useContext(mContext);
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
     setLoginIn(true);
     try {
-      await u.comprobUser();
-      setLoginIn(false);
+      const uLog = await u.comprobUser();
+      switch (uLog) {
+        case "ERR":
+          setLoginIn(false);
+          break;
+        case "IEP":
+          setLoginIn(false);
+          break;
+        default:
+          setSession("session", uLog);
+          setLoginIn(false);
+          break;
+      }
     } catch (error) {
       setLoginIn(false);
       console.log(error);
@@ -80,6 +93,9 @@ export const Login = () => {
             </>
           )}
         </div>
+      </div>
+      <div className="fixed bottom-3 left-50 text-md">
+        © 2024 raultorres - All rights reserved
       </div>
     </div>
   );
