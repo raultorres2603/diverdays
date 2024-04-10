@@ -7,7 +7,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [loginIn, setLoginIn] = useState(false);
-  const { setSession } = useContext(mContext);
+  const { setCookies } = useContext(mContext);
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
