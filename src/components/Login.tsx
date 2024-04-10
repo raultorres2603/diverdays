@@ -1,16 +1,20 @@
 import { useState } from "react";
 import User from "../classes/User";
-import { ArrowDownCircleIcon } from "@heroicons/react/16/solid";
+import { ArrowDownCircleIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [loginIn, setLoginIn] = useState(false);
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
+    setLoginIn(true);
     try {
       await u.comprobUser();
+      setLoginIn(false);
     } catch (error) {
+      setLoginIn(false);
       console.log(error);
     }
   };
@@ -24,43 +28,53 @@ export const Login = () => {
             <input
               type="email"
               id={"email"}
-              className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg"
+              className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+                loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
+              } bg-indigo-500 rounded-lg`}
               onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
               placeholder="Email"
-              name=""
+              readOnly={loginIn}
             />
           </div>
 
           {/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) && (
             <>
-              <svg className="animate-pulse w-100 h-14 self-center">
+              <svg className="w-100 h-14 self-center">
                 <ArrowDownCircleIcon className="text-indigo-500" />
               </svg>
               <div className="snap-always snap-center">
                 <input
                   type="password"
                   id={"pass"}
-                  className="form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg"
+                  className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+                    loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
+                  }bg-indigo-500 rounded-lg`}
                   onInput={(e) => setPass((e.target as HTMLInputElement).value)}
                   placeholder="Password"
-                  name=""
+                  readOnly={loginIn}
                 />
               </div>
             </>
           )}
           {pass.trim().length >= 8 && (
             <>
-              <svg className="animate-pulse w-100 h-14 self-center">
+              <svg className="w-100 h-14 self-center">
                 <ArrowDownCircleIcon className="text-indigo-500" />
               </svg>
               <div className="grid grid-cols-1 gap-4">
                 <button
-                  className="text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white bg-indigo-500 rounded-lg w-100"
+                  className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+                    loginIn ? "bg-slate-400 opacity-50" : "bg-indigo-500"
+                  } rounded-lg w-100`}
                   onClick={() => {
                     createUser(email, pass);
                   }}
                 >
-                  Entrar
+                  {loginIn ? (
+                    <ArrowPathIcon className="animate-spin w-100 h-9 mx-auto" />
+                  ) : (
+                    "Entrar"
+                  )}
                 </button>
               </div>
             </>
