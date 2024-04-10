@@ -1,6 +1,6 @@
 import { useState } from "react";
 import User from "../classes/User";
-import { ArrowDownCircleIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
+import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,8 +39,8 @@ export const Login = () => {
 
           {/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) && (
             <>
-              <svg className="w-100 h-14 self-center">
-                <ArrowDownCircleIcon className="text-indigo-500" />
+              <svg className="w-100 h-12 self-center">
+                <ArrowDownIcon className="text-indigo-500" />
               </svg>
               <div className="snap-always snap-center">
                 <input
@@ -58,8 +58,8 @@ export const Login = () => {
           )}
           {pass.trim().length >= 8 && (
             <>
-              <svg className="w-100 h-14 self-center">
-                <ArrowDownCircleIcon className="text-indigo-500" />
+              <svg className="w-100 h-12 self-center">
+                <ArrowDownIcon className="text-indigo-500" />
               </svg>
               <div className="grid grid-cols-1 gap-4">
                 <button
