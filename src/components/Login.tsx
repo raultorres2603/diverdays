@@ -1,13 +1,12 @@
 import { useState, useContext } from "react";
 import User from "../classes/User";
 import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
-import { mContext } from "../contexts/MainContext";
-
+import { useCookies } from "react-cookie";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [loginIn, setLoginIn] = useState(false);
-  const { setCookies } = useContext(mContext);
+  const [cookies, setCookies] = useCookies(["session"]);
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
@@ -22,7 +21,8 @@ export const Login = () => {
           setLoginIn(false);
           break;
         default:
-          setSession("session", uLog);
+          console.log(cookies);
+          setCookies("session", uLog);
           setLoginIn(false);
           break;
       }

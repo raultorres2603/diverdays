@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import { mContext } from "../contexts/MainContext";
 import { Login } from "./Login";
 import { MainMenu } from "./MainMenu";
+import { useCookies } from "react-cookie";
+
 export const View = () => {
-  const { cookies } = useContext(mContext);
+  const [cookies] = useCookies(["session"]);
 
   function handleView() {
-    if (!cookies) {
+    if (!cookies.session) {
       return <Login />;
     } else {
       return <MainMenu />;
