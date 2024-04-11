@@ -1,20 +1,27 @@
 import md5 from "crypto-js/md5";
 import toast from "react-hot-toast";
+
 export default class User {
   private _email: string;
-  private _pass: string;
+  private _password: string;
+  private _id: string;
 
   constructor(public vEmail: string, public vPass: string) {
+    this._id = "";
     this._email = vEmail;
-    this._pass = vPass;
+    this._password = vPass;
   }
 
   get email() {
     return this._email;
   }
 
-  get pass() {
-    return this._pass;
+  get id() {
+    return this._id;
+  }
+
+  get password() {
+    return this._password;
   }
 
   set email(vEmail: string) {
@@ -22,7 +29,11 @@ export default class User {
   }
 
   set pass(vPass: string) {
-    this._pass = md5(import.meta.env.VITE_SK + vPass).toString();
+    this._password = md5(import.meta.env.VITE_SK + vPass).toString();
+  }
+
+  set id(vId: string) {
+    this._id = vId;
   }
 
   async comprobUser(): Promise<"IEP" | string | "ERR"> {
@@ -35,7 +46,7 @@ export default class User {
         },
         body: JSON.stringify({
           email: this.email,
-          pass: this.pass,
+          pass: this.password,
         }),
       });
       const response = await compU.json();
@@ -52,6 +63,29 @@ export default class User {
       return "ERR";
     } finally {
       toast.dismiss(loadComp);
+    }
+  }
+
+  static async getInfo(userId: string): Promise<boolean | JSON> {
+    const loadComp = toast.loading("Cargando...");
+    try {
+      const compU = await fetch(`${import.meta.env.VITE_H}/users/getInfo`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+        }),
+      });
+      const response = await compU.json();
+      toast.dismiss(loadComp);
+      console.log(response);
+      return response;
+    } catch (error) {
+      toast.dismiss(loadComp);
+      toast.error("Error al iniciar sesión");
+      return false;
     }
   }
 }

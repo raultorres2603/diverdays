@@ -6,17 +6,21 @@ import {
   useEffect,
 } from "react";
 import { useState } from "react";
+import { ReactCookieProps } from "react-cookie";
 import { useCookies } from "react-cookie";
+import User from "../classes/User";
 
 type ContextType = {
   view: number;
   setView: Dispatch<SetStateAction<number>>;
+  cookies: ReactCookieProps;
 };
 
 export const mContext = createContext<ContextType | null>(null);
 export const MainContext = ({ children }: { children: ReactNode }) => {
   const [cookies, setCookies, removeCookies] = useCookies(["session"]);
   const [view, setView] = useState<number | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     if (!cookies.session) {
@@ -41,6 +45,8 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <mContext.Provider value={{ view, setView }}>{children}</mContext.Provider>
+    <mContext.Provider value={{ view, setView, cookies, user, setUser }}>
+      {children}
+    </mContext.Provider>
   );
 };
