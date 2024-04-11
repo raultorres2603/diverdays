@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import User from "../classes/User";
 import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
 import { useCookies } from "react-cookie";
@@ -22,7 +22,11 @@ export const Login = () => {
           break;
         default:
           console.log(cookies);
-          setCookies("session", uLog);
+          setCookies("session", uLog, {
+            //maxAge: 3600,
+            sameSite: true,
+            path: "/",
+          });
           setLoginIn(false);
           break;
       }
@@ -33,7 +37,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="login">
+    <div className="login place-content-center">
       <h1 className="text-7xl font-bold text-indigo-300">DiverAPP</h1>
       <div className="snap-x snap-mandatory">
         <div className="grid grid-rows-1 gap-4 mt-9">
