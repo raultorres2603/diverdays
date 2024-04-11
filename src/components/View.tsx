@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Login } from "./Login";
 import { MainMenu } from "./MainMenu";
-import { useCookies } from "react-cookie";
+import { mContext } from "../contexts/MainContext";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export const View = () => {
-  const [cookies] = useCookies(["session"]);
-  const [view, setView] = useState(0);
-
-  useEffect(() => {
-    if (!cookies.session) {
-      setView(0);
-    } else {
-      setView(1);
-    }
-  }, [cookies.session]);
+  const { view, setView } = useContext(mContext);
 
   function handleView() {
     switch (view) {
       case 0:
-        return (
-          <div className="transition duration-700 ease-in-out">
-            <Login />
-          </div>
-        );
+        return <Login />;
         break;
 
       case 1:
         return (
-          <div className="transition duration-700 ease-in-out">
-            <MainMenu />
-          </div>
+          <>
+            <MainMenu />{" "}
+            <ArrowLeftEndOnRectangleIcon
+              stroke="red"
+              onClick={() => {
+                setView(0);
+              }}
+              className="transition ease-in-out w-10 h-auto fixed bottom-5 right-5 active:scale-90 hover:scale-150"
+            />
+          </>
         );
         break;
 

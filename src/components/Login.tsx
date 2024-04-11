@@ -1,6 +1,6 @@
 import { useState } from "react";
 import User from "../classes/User";
-import { ArrowDownIcon, ArrowPathIcon } from "@heroicons/react/16/solid";
+import { ArrowPathIcon } from "@heroicons/react/16/solid";
 import { useCookies } from "react-cookie";
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +38,9 @@ export const Login = () => {
 
   return (
     <div className="login justify-content-center">
-      <h1 className="text-7xl font-bold text-indigo-300">DiverAPP</h1>
+      <h1 className="text-7xl font-bold dark:text-indigo-300 text-indigo-800">
+        DiverAPP
+      </h1>
       <div className="grid grid-rows-1 gap-10 mt-9">
         <input
           type="email"
