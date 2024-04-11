@@ -37,66 +37,54 @@ export const Login = () => {
   };
 
   return (
-    <div className="login place-content-center">
+    <div className="login justify-content-center">
       <h1 className="text-7xl font-bold text-indigo-300">DiverAPP</h1>
-      <div className="snap-x snap-mandatory">
-        <div className="grid grid-rows-1 gap-4 mt-9">
-          <div className="snap-always snap-center">
+      <div className="grid grid-rows-1 gap-10 mt-9">
+        <input
+          type="email"
+          id={"email"}
+          className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+            loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
+          } bg-indigo-500 rounded-lg`}
+          onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+          placeholder="Email"
+          readOnly={loginIn}
+        />
+
+        {/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) && (
+          <>
             <input
-              type="email"
-              id={"email"}
+              type="password"
+              id={"pass"}
               className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
                 loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
-              } bg-indigo-500 rounded-lg`}
-              onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
-              placeholder="Email"
+              }bg-indigo-500 rounded-lg`}
+              onInput={(e) => setPass((e.target as HTMLInputElement).value)}
+              placeholder="Password"
               readOnly={loginIn}
             />
-          </div>
-
-          {/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) && (
-            <>
-              <svg className="w-100 h-12 self-center">
-                <ArrowDownIcon className="text-indigo-500" />
-              </svg>
-              <div className="snap-always snap-center">
-                <input
-                  type="password"
-                  id={"pass"}
-                  className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
-                    loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
-                  }bg-indigo-500 rounded-lg`}
-                  onInput={(e) => setPass((e.target as HTMLInputElement).value)}
-                  placeholder="Password"
-                  readOnly={loginIn}
-                />
-              </div>
-            </>
-          )}
-          {pass.trim().length >= 8 && (
-            <>
-              <svg className="w-100 h-12 self-center">
-                <ArrowDownIcon className="text-indigo-500" />
-              </svg>
-              <div className="grid grid-cols-1 gap-4">
-                <button
-                  className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
-                    loginIn ? "bg-slate-400 opacity-50" : "bg-indigo-500"
-                  } rounded-lg w-100`}
-                  onClick={() => {
-                    createUser(email, pass);
-                  }}
-                >
-                  {loginIn ? (
-                    <ArrowPathIcon className="animate-spin w-100 h-9 mx-auto" />
-                  ) : (
-                    "Entrar"
-                  )}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+          </>
+        )}
+        {pass.trim().length >= 8 && (
+          <>
+            <div className="grid grid-cols-1 gap-4">
+              <button
+                className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+                  loginIn ? "bg-slate-400 opacity-50" : "bg-indigo-500"
+                } rounded-lg w-100`}
+                onClick={() => {
+                  createUser(email, pass);
+                }}
+              >
+                {loginIn ? (
+                  <ArrowPathIcon className="animate-spin w-100 h-9 mx-auto" />
+                ) : (
+                  "Entrar"
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </div>
       <div className="fixed bottom-3 left-50 text-md">
         © 2024 raultorres - All rights reserved
