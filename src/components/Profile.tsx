@@ -1,5 +1,8 @@
 import React from "react";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftEndOnRectangleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { mContext } from "../contexts/MainContext";
 import { BackwardIcon } from "@heroicons/react/24/outline";
@@ -11,7 +14,32 @@ export const Profile = () => {
 
   return (
     <div>
-      {!user && <Skeleton circle={true} className="w-40 h-40 bg-zinc-400" />}
+      <div className="grid grid-cols-2">
+        {" "}
+        <div className="w-32 h-32 bg-zinc-400 rounded-full">
+          {!user ? (
+            <Skeleton className="w-32 h-32 bg-zinc-400 rounded-full" />
+          ) : !user.avatar ? (
+            <UserCircleIcon />
+          ) : (
+            <img src={user.avatar} className="rounded-full" />
+          )}
+        </div>
+        <div>
+          {!user ? (
+            <Skeleton className="text-xl bg-zinc-400" count={1} />
+          ) : (
+            <input
+              className={`form-control text-2xl w-full text-center ${
+                !user.name && "border-2 border-cyan-100 rounded-lg"
+              }`}
+              defaultValue={user.name}
+              placeholder="Nombre"
+            />
+          )}
+        </div>
+      </div>
+
       <ArrowLeftEndOnRectangleIcon
         stroke="red"
         onClick={() => {
