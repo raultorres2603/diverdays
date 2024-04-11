@@ -8,9 +8,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 export const Profile = () => {
   const { setView, user } = useContext(mContext);
+
   return (
     <div>
-      {!user && <Skeleton circle={true} className="w-40 h-40" />}
+      {!user && <Skeleton circle={true} className="w-40 h-40 bg-zinc-400" />}
       <ArrowLeftEndOnRectangleIcon
         stroke="red"
         onClick={() => {

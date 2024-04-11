@@ -74,6 +74,7 @@ export const Login = () => {
                 className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
                   loginIn ? "bg-slate-400 opacity-50" : "bg-indigo-500"
                 } rounded-lg w-100`}
+                disabled={loginIn}
                 onClick={() => {
                   createUser(email, pass);
                 }}
