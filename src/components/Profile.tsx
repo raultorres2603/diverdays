@@ -64,14 +64,14 @@ export const Profile = () => {
         onClick={() => {
           setView(0);
         }}
-        className="transition ease-in-out w-10 h-auto fixed bottom-5 right-5 active:scale-90 hover:scale-150"
+        className="transition ease-in-out w-14 h-auto fixed bottom-5 right-5 active:scale-90 hover:scale-150"
       />
       <BackwardIcon
         stroke="red"
         onClick={() => {
           setView(1);
         }}
-        className="transition ease-in-out w-10 h-auto fixed bottom-5 left-5 active:scale-90 hover:scale-150"
+        className="transition ease-in-out w-14 h-auto fixed bottom-5 left-5 active:scale-90 hover:scale-150"
       />
     </div>
   );
