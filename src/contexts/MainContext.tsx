@@ -25,6 +25,7 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!cookies.session) {
       setView(0);
+      setUser(null);
     } else {
       setView(1);
     }
@@ -39,6 +40,7 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!cookies.session) {
       setView(0);
+      setUser(null);
     } else {
       setView(1);
     }

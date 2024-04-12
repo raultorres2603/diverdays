@@ -16,7 +16,7 @@ export const Profile = () => {
     <div>
       <div className="grid grid-cols-2">
         {" "}
-        <div className="w-36 h-36 bg-sky-300 rounded-full">
+        <div className="w-36 h-36 bg-sky-300 dark:bg-zinc-400 rounded-full">
           {!user ? (
             <Skeleton className="w-36 h-36 bg-zinc-400 dark:bg-zinc-400 rounded-full" />
           ) : !user.avatar ? (
