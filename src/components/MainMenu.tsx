@@ -13,7 +13,7 @@ export const MainMenu = () => {
   const { cookies, setView, setUser, user } = useContext(mContext);
   return (
     <>
-      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 mb-9">
+      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 mb-9 select-none	">
         Menu
       </h1>
       <div className="grid grid-cols-2 gap-4">
@@ -26,7 +26,7 @@ export const MainMenu = () => {
               setUser(await User.getInfo(cookies?.session as string));
             }}
           >
-            <UserIcon className="w-full h-auto" />
+            <UserIcon className="w-full h-1/2" />
           </button>
         </div>
         <div>
@@ -34,7 +34,7 @@ export const MainMenu = () => {
             type="button"
             className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
           >
-            <CalendarDaysIcon className="w-full h-auto" />
+            <CalendarDaysIcon className="w-full h-1/2" />
           </button>
         </div>
         <div>
@@ -42,7 +42,7 @@ export const MainMenu = () => {
             type="button"
             className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
           >
-            <UserGroupIcon className="w-full h-auto" />
+            <UserGroupIcon className="w-full h-1/2" />
           </button>
         </div>
         <div>
@@ -50,7 +50,7 @@ export const MainMenu = () => {
             type="button"
             className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
           >
-            <Cog8ToothIcon className="w-full h-auto" />
+            <Cog8ToothIcon className="w-full h-1/2" />
           </button>
         </div>
       </div>
