@@ -37,7 +37,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="login justify-content-center">
+    <div className="login">
       <h1 className="text-7xl font-bold dark:text-indigo-300 text-indigo-800 select-none	">
         DiverAPP
       </h1>
@@ -89,7 +89,7 @@ export const Login = () => {
           </>
         )}
       </div>
-      <div className="fixed bottom-3 left-50 text-md">
+      <div className="fixed bottom-3 text-md">
         © 2024 raultorres - All rights reserved
       </div>
     </div>

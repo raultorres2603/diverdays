@@ -19,7 +19,7 @@ export const Profile = () => {
     <div>
       <div className="grid grid-cols-2">
         {" "}
-        <div className="rounded-full mr-3 w-auto h-1/2">
+        <div className="rounded-full w-auto h-1/2 mr-5">
           {!user ? (
             <Skeleton className="w-full h-full bg-zinc-400 dark:bg-zinc-400 rounded-full" />
           ) : !user.avatar ? (
