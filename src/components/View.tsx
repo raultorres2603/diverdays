@@ -5,7 +5,7 @@ import { mContext } from "../contexts/MainContext";
 import { Profile } from "./Profile";
 
 export const View = () => {
-  const { view, setView } = useContext(mContext);
+  const { view } = useContext(mContext);
 
   function handleView() {
     switch (view) {
