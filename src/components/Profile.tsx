@@ -12,7 +12,7 @@ import User from "../classes/User";
 
 export const Profile = () => {
   const { setView, user, setUser } = useContext(mContext);
-  const [userV] = useState<User>(user);
+  const [userV, setUserV] = useState<User>(user);
 
   async function updateUser() {
     try {
@@ -54,8 +54,8 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(userV);
-  }, []);
+    setUserV(user);
+  }, [user]);
 
   return (
     <div>
@@ -129,11 +129,7 @@ export const Profile = () => {
                       className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
                       id="birthday"
                       defaultValue={
-                        userV &&
-                        userV.birthday &&
-                        `${new Date(userV.birthday).getFullYear()}-${new Date(
-                          userV.birthday
-                        ).getMonth()}-${new Date(userV.birthday).getDate()}`
+                        userV && userV.birthday && `${new Date(userV.birthday)}`
                       }
                       onInput={handleUpdate}
                       type="date"
