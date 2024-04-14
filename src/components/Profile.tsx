@@ -1,18 +1,61 @@
 import {
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { useContext, useState } from "react";
+import { FormEventHandler, useContext, useEffect, useState } from "react";
 import { mContext } from "../contexts/MainContext";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import User from "../classes/User";
 
 export const Profile = () => {
-  const { setView, user } = useContext(mContext);
-  const [birthday, setBirthday] = useState<Date>(
-    new Date(user && user.birthday ? user.birthday : new Date())
-  );
+  const { setView, user, setUser } = useContext(mContext);
+  const [userV] = useState<User>(user);
+
+  async function updateUser() {
+    try {
+      await userV.update();
+      setUser(userV);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleUpdate: FormEventHandler<HTMLInputElement | HTMLSelectElement> = (
+    e
+  ) => {
+    console.log(e);
+    switch (e.target.id) {
+      case "fname":
+        userV.fname = e.target.value;
+        console.log(userV);
+        break;
+      case "name":
+        userV.name = e.target.value;
+        console.log(userV);
+        break;
+      case "birthday":
+        userV.birthday = new Date(e.target.value);
+        console.log(userV);
+        break;
+      case "genre":
+        userV.genre = e.target.value;
+        console.log(userV);
+        break;
+      case "profile":
+        userV.profile = e.target.value;
+        console.log(userV);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    console.log(userV);
+  }, []);
 
   return (
     <div>
@@ -37,34 +80,34 @@ export const Profile = () => {
           ) : (
             <div className="grid grid-rows-4 gap-4">
               <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg ${
-                  !user.name ? "border-red-300" : "border-sky-300"
-                }`}
-                defaultValue={user.name}
+                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                onInput={handleUpdate}
+                id="name"
+                defaultValue={userV.name}
                 placeholder="Nombre"
               />
               <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg ${
-                  !user.fname ? "border-red-300" : "border-sky-300"
-                }`}
-                defaultValue={user.fname}
+                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                onInput={handleUpdate}
+                id="fname"
+                defaultValue={userV.fname}
                 placeholder="Apellido"
               />
               <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center ${
-                  !user.genre ? "border-red-300" : "border-sky-300"
-                }`}
-                defaultValue={user.genre ? user.genre : "N"}
+                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                onChange={handleUpdate}
+                id="genre"
+                defaultValue={userV.genre ? userV.genre : "N"}
               >
                 <option value="N">Género</option>
                 <option value="H">Hombre</option>
                 <option value="M">Mujer</option>
               </select>
               <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center ${
-                  !user.private ? "border-red-300" : "border-sky-300"
-                }`}
-                defaultValue={user.private ? user.private : "N"}
+                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                id="profile"
+                onChange={handleUpdate}
+                defaultValue={userV.profile ? userV.profile : "N"}
               >
                 <option value="N">Perfil</option>
                 <option value="1">Privado</option>
@@ -83,61 +126,17 @@ export const Profile = () => {
                   <div className="grid grid-rows-3 gap-2">
                     <div className="birthdayText text-2xl">Cumpleaños</div>
                     <input
-                      className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg ${
-                        !user.birthday
-                          ? birthday == new Date()
-                            ? "border-red-300"
-                            : "border-sky-300"
-                          : "border-sky-300"
-                      }`}
-                      defaultValue={user && user.birthday && user.birthday}
-                      onInput={(e) => {
-                        setBirthday(
-                          new Date((e.target as HTMLInputElement).value)
-                        );
-                      }}
-                      type="date"
-                      placeholder="Fecha de nacimiento"
-                    />
-                    <input
-                      className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg ${
-                        !user.birthday
-                          ? birthday == new Date()
-                            ? "border-red-300"
-                            : "border-sky-300"
-                          : "border-sky-300"
-                      }`}
-                      readOnly
-                      value={
-                        user.birthday
-                          ? Math.round(
-                              ((new Date() as Date) - new Date(user.birthday)) /
-                                1000 /
-                                60 /
-                                60 /
-                                24
-                            ).toString()
-                          : birthday
-                          ? Math.round(
-                              (new Date() - birthday) / 1000 / 60 / 60 / 24
-                            ).toString()
-                          : 0
-                      }
+                      className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                      id="birthday"
                       defaultValue={
-                        user.birthday
-                          ? Math.round(
-                              ((new Date() as Date) - new Date(user.birthday)) /
-                                1000 /
-                                60 /
-                                60 /
-                                24
-                            ).toString()
-                          : birthday
-                          ? Math.round(
-                              (new Date() - birthday) / 1000 / 60 / 60 / 24
-                            ).toString()
-                          : 0
+                        userV &&
+                        userV.birthday &&
+                        `${new Date(userV.birthday).getFullYear()}-${new Date(
+                          userV.birthday
+                        ).getMonth()}-${new Date(userV.birthday).getDate()}`
                       }
+                      onInput={handleUpdate}
+                      type="date"
                       placeholder="Fecha de nacimiento"
                     />
                   </div>
@@ -161,6 +160,14 @@ export const Profile = () => {
           setView(1);
         }}
         className="transition ease-in-out w-14 h-auto fixed bottom-5 left-5 active:scale-90 hover:scale-150"
+      />
+
+      <CheckCircleIcon
+        stroke="green"
+        onClick={() => {
+          updateUser();
+        }}
+        className="transition ease-in-out w-14 h-auto fixed bottom-5 right-1/2 active:scale-90 hover:scale-150"
       />
     </div>
   );

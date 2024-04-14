@@ -28,6 +28,8 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
       setUser(null);
     } else {
       setView(1);
+      setUser(new User("", "", cookies.session as string));
+      console.log(cookies);
     }
   }, [cookies]);
 
