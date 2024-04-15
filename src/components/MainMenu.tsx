@@ -44,7 +44,7 @@ export const MainMenu = () => {
             <UserIcon className="w-full h-1/2" />
             {user.birthday && (
               <div className="absolute bottom-0 right-0">
-                <div className=" transition-all ease-in-out text-xs hover:text-xl rounded-lg text-white bg-indigo-700 dark:bg-zinc-500 p-1 opacity-100">
+                <div className=" transition-all ease-in-out text-sm hover:text-xl rounded-lg text-white bg-indigo-700 dark:bg-zinc-500 p-1 opacity-100">
                   {Math.round(
                     (new Date() - new Date(user.birthday)) /
                       (1000 * 60 * 60 * 24)

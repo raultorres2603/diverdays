@@ -97,11 +97,14 @@ export const Profile = () => {
       <div>
         <div className="grid grid-cols-2">
           {" "}
-          <div className="rounded-full w-auto h-1/2 mr-5">
+          <div className="relative rounded-full w-auto h-1/2 mr-5 transition-all ease-in-out">
             {!user.avatar ? (
               <UserCircleIcon className=" bg-zinc-400 text-white dark:bg-zinc-400 rounded-full" />
             ) : (
-              <img src={user.avatar} />
+              <img
+                src={user.avatar}
+                className="w-full h-full rounded-full transition-all ease-in-out duration-200 hover:scale-150 active:translate-x-96 "
+              />
             )}
           </div>
           <div>
