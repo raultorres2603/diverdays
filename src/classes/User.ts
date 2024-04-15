@@ -91,7 +91,7 @@ export default class User {
     this._email = vEmail;
   }
 
-  set pass(vPass: string) {
+  set password(vPass: string) {
     this._password = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 
@@ -99,7 +99,7 @@ export default class User {
     this._id = vId;
   }
 
-  async update(): Promise<void> {
+  public async updateU(): Promise<void> {
     const loadComp = toast.loading("Actualizando...");
     try {
       const updateUser = await fetch(`${import.meta.env.VITE_H}/users/update`, {
@@ -119,7 +119,7 @@ export default class User {
       });
       const response = await updateUser.json();
       console.log(response);
-      if (response == "OK") {
+      if (response.res == "OK") {
         toast.dismiss(loadComp);
         toast.success("Usuario actualizado");
       } else {
@@ -177,7 +177,7 @@ export default class User {
       const response = await compU.json();
       toast.dismiss(loadComp);
       console.log(response);
-      return response;
+      return Object.setPrototypeOf(response, User.prototype) as User;
     } catch (error) {
       toast.dismiss(loadComp);
       toast.error("Error al iniciar sesión");

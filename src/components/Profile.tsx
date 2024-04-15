@@ -3,7 +3,7 @@ import {
   UserCircleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { FormEventHandler, useContext, useEffect, useState } from "react";
+import { FormEventHandler, useContext } from "react";
 import { mContext } from "../contexts/MainContext";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
@@ -11,135 +11,63 @@ import "react-loading-skeleton/dist/skeleton.css";
 import User from "../classes/User";
 
 export const Profile = () => {
-  const { setView, user, setUser } = useContext(mContext);
-  const [userV, setUserV] = useState<User>(user);
+  const { setView, user, loading } = useContext(mContext) || {
+    setView: () => {},
+    user: new User("", ""),
+    loading: true,
+  };
 
-  async function updateUser() {
+  const updateUser: () => Promise<void> = async () => {
     try {
-      await userV.update();
-      setUser(userV);
+      await user?.updateU();
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleUpdate: FormEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e
   ) => {
     console.log(e);
-    switch (e.target.id) {
+    switch ((e.target as HTMLInputElement | HTMLSelectElement).id) {
       case "fname":
-        userV.fname = e.target.value;
-        console.log(userV);
+        user.fname = (e.target as HTMLInputElement).value;
+        console.log(user);
         break;
       case "name":
-        userV.name = e.target.value;
-        console.log(userV);
+        user.name = (e.target as HTMLInputElement).value;
+        console.log(user);
         break;
       case "birthday":
-        userV.birthday = new Date(e.target.value);
-        console.log(userV);
+        user.birthday = new Date((e.target as HTMLInputElement).value);
+        console.log(user);
         break;
       case "genre":
-        userV.genre = e.target.value;
-        console.log(userV);
+        user.genre = (e.target as HTMLSelectElement).value;
+        console.log(user);
         break;
       case "profile":
-        userV.profile = e.target.value;
-        console.log(userV);
+        user.profile = (e.target as HTMLSelectElement).value;
+        console.log(user);
         break;
       default:
         break;
     }
   };
 
-  useEffect(() => {
-    setUserV(user);
-  }, [user]);
-
-  return (
+  return loading ? (
     <div>
       <div className="grid grid-cols-2">
         {" "}
         <div className="rounded-full w-auto h-1/2 mr-5">
-          {!user ? (
-            <Skeleton className="w-full h-full bg-zinc-400 dark:bg-zinc-400 rounded-full" />
-          ) : !user.avatar ? (
-            <UserCircleIcon className=" bg-zinc-400 text-white dark:bg-zinc-400 rounded-full" />
-          ) : (
-            <img src={user.avatar} />
-          )}
+          <Skeleton className="w-full h-full bg-zinc-400 dark:bg-zinc-400 rounded-full" />
         </div>
         <div>
-          {!user ? (
-            <>
-              <Skeleton className="text-xl bg-zinc-400 mt-3" count={4} />
-              <div className="border-2 mt-4"></div>{" "}
-              <Skeleton className="text-xl bg-zinc-400 mt-2" count={3} />
-            </>
-          ) : (
-            <div className="grid grid-rows-4 gap-4">
-              <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
-                onInput={handleUpdate}
-                id="name"
-                defaultValue={userV.name}
-                placeholder="Nombre"
-              />
-              <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
-                onInput={handleUpdate}
-                id="fname"
-                defaultValue={userV.fname}
-                placeholder="Apellido"
-              />
-              <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
-                onChange={handleUpdate}
-                id="genre"
-                defaultValue={userV.genre ? userV.genre : "N"}
-              >
-                <option value="N">Género</option>
-                <option value="H">Hombre</option>
-                <option value="M">Mujer</option>
-              </select>
-              <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
-                id="profile"
-                onChange={handleUpdate}
-                defaultValue={userV.profile ? userV.profile : "N"}
-              >
-                <option value="N">Perfil</option>
-                <option value="1">Privado</option>
-                <option value="0">Público</option>
-              </select>
-              <div className="border-2"></div>{" "}
-              <div className="birthday">
-                {!user ? (
-                  <div className="grid grid-rows-3 gap-4">
-                    {" "}
-                    <Skeleton className="text-xl bg-zinc-400" count={1} />
-                    <Skeleton className="text-xl bg-zinc-400" count={1} />
-                    <Skeleton className="text-xl bg-zinc-400" count={1} />
-                  </div>
-                ) : (
-                  <div className="grid grid-rows-3 gap-2">
-                    <div className="birthdayText text-2xl">Cumpleaños</div>
-                    <input
-                      className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
-                      id="birthday"
-                      defaultValue={
-                        userV && userV.birthday && `${new Date(userV.birthday)}`
-                      }
-                      onInput={handleUpdate}
-                      type="date"
-                      placeholder="Fecha de nacimiento"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+          <>
+            <Skeleton className="text-xl bg-zinc-400 mt-3" count={4} />
+            <div className="border-2 mt-4"></div>{" "}
+            <Skeleton className="text-xl bg-zinc-400 mt-2" count={2} />
+          </>
         </div>
       </div>
       {/* Footer */}
@@ -160,11 +88,99 @@ export const Profile = () => {
 
       <CheckCircleIcon
         stroke="green"
-        onClick={() => {
-          updateUser();
-        }}
+        onClick={updateUser}
         className="transition ease-in-out w-14 h-auto fixed bottom-5 right-1/2 active:scale-90 hover:scale-150"
       />
     </div>
+  ) : (
+    <>
+      <div>
+        <div className="grid grid-cols-2">
+          {" "}
+          <div className="rounded-full w-auto h-1/2 mr-5">
+            {!user.avatar ? (
+              <UserCircleIcon className=" bg-zinc-400 text-white dark:bg-zinc-400 rounded-full" />
+            ) : (
+              <img src={user.avatar} />
+            )}
+          </div>
+          <div>
+            <div className="grid grid-rows-4 gap-4">
+              <input
+                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                onInput={handleUpdate}
+                id="name"
+                defaultValue={user.name}
+                placeholder="Nombre"
+              />
+              <input
+                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                onInput={handleUpdate}
+                id="fname"
+                defaultValue={user.fname}
+                placeholder="Apellido"
+              />
+              <select
+                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                onChange={handleUpdate}
+                id="genre"
+                defaultValue={user.genre ? user.genre : "N"}
+              >
+                <option value="N">Género</option>
+                <option value="H">Hombre</option>
+                <option value="M">Mujer</option>
+              </select>
+              <select
+                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                id="profile"
+                onChange={handleUpdate}
+                defaultValue={user.profile ? user.profile : "N"}
+              >
+                <option value="N">Perfil</option>
+                <option value="1">Privado</option>
+                <option value="0">Público</option>
+              </select>
+              <div className="border-2"></div>{" "}
+              <div className="birthday">
+                <div className="grid grid-rows-3 gap-2">
+                  <div className="birthdayText text-2xl">Cumpleaños</div>
+                  <input
+                    className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                    id="birthday"
+                    defaultValue={
+                      user && user.birthday && `${new Date(user.birthday)}`
+                    }
+                    onInput={handleUpdate}
+                    type="date"
+                    placeholder="Fecha de nacimiento"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Footer */}
+        <ArrowLeftEndOnRectangleIcon
+          stroke="red"
+          onClick={() => {
+            setView(0);
+          }}
+          className="transition ease-in-out w-14 h-auto fixed bottom-5 right-5 active:scale-90 hover:scale-150"
+        />
+        <BackwardIcon
+          stroke="red"
+          onClick={() => {
+            setView(1);
+          }}
+          className="transition ease-in-out w-14 h-auto fixed bottom-5 left-5 active:scale-90 hover:scale-150"
+        />
+
+        <CheckCircleIcon
+          stroke="green"
+          onClick={updateUser}
+          className="transition ease-in-out w-14 h-auto fixed bottom-5 right-1/2 active:scale-90 hover:scale-150"
+        />
+      </div>
+    </>
   );
 };

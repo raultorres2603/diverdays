@@ -11,24 +11,40 @@ import { useCookies } from "react-cookie";
 import User from "../classes/User";
 
 type ContextType = {
-  view: number;
-  setView: Dispatch<SetStateAction<number>>;
+  view: number | null;
+  setView: Dispatch<SetStateAction<number | null>>;
   cookies: ReactCookieProps;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setCookies: Dispatch<SetStateAction<ReactCookieProps>>;
 };
 
 export const mContext = createContext<ContextType | null>(null);
 export const MainContext = ({ children }: { children: ReactNode }) => {
   const [cookies, setCookies, removeCookies] = useCookies(["session"]);
   const [view, setView] = useState<number | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>(new User("", ""));
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!cookies.session) {
       setView(0);
-      setUser(null);
+      setUser(new User("", ""));
     } else {
       setView(1);
-      setUser(new User("", "", cookies.session as string));
+      setLoading(true);
+      const fetchUser = async () => {
+        const userInfo = await User.getInfo(cookies?.session as string);
+        if (userInfo instanceof User) {
+          setUser(userInfo);
+        } else {
+          // Handle the case where the promise resolves to a boolean
+        }
+        setLoading(false);
+      };
+      fetchUser();
       console.log(cookies);
     }
   }, [cookies]);
@@ -42,14 +58,23 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!cookies.session) {
       setView(0);
-      setUser(null);
     } else {
       setView(1);
     }
   }, []);
 
   return (
-    <mContext.Provider value={{ view, setView, cookies, user, setUser }}>
+    <mContext.Provider
+      value={{
+        view,
+        setView,
+        cookies,
+        user,
+        setUser,
+        loading,
+        setLoading,
+      }}
+    >
       {children}
     </mContext.Provider>
   );
