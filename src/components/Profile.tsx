@@ -3,12 +3,13 @@ import {
   UserCircleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { FormEventHandler, useContext } from "react";
+import React, { FormEventHandler, useContext, useState } from "react";
 import { mContext } from "../contexts/MainContext";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import User from "../classes/User";
+import toast from "react-hot-toast";
 
 export const Profile = () => {
   const { setView, user, loading } = useContext(mContext) || {
@@ -55,6 +56,29 @@ export const Profile = () => {
     }
   };
 
+  function pushIMG() {
+    document.getElementById("avatar")?.click();
+  }
+
+  function saveAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0].size > 1000000) {
+      toast.error("Tamaño de imagen demasiado grande");
+      return;
+    }
+
+    if (e.target.files) {
+      console.log(e.target.files[0]);
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        if (reader.result) {
+          console.log(reader.result);
+          user.avatar = reader.result as string;
+        }
+      };
+    }
+  }
+
   return loading ? (
     <div>
       <div className="grid grid-cols-2">
@@ -95,18 +119,33 @@ export const Profile = () => {
   ) : (
     <>
       <div>
-        <div className="grid grid-cols-2">
-          {" "}
-          <div className="relative rounded-full w-auto h-1/2 mr-5 transition-all ease-in-out">
-            {!user.avatar ? (
-              <UserCircleIcon className=" bg-zinc-400 text-white dark:bg-zinc-400 rounded-full" />
-            ) : (
-              <img
-                src={user.avatar}
-                className="w-full h-full rounded-full transition-all ease-in-out duration-200 hover:scale-150 active:translate-x-96 "
+        <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-rows-2">
+            {" "}
+            <div
+              className=" rounded-full w-full h-1/2 mr-5 transition-all ease-in-out active:scale-90 duration-300"
+              onClick={pushIMG}
+            >
+              {!user.avatar ? (
+                <UserCircleIcon className=" bg-zinc-400 text-white dark:bg-zinc-400 rounded-full" />
+              ) : (
+                <img
+                  src={user.avatar}
+                  className="w-full h-full rounded-full transition-all ease-in-out duration-200"
+                />
+              )}
+            </div>
+            <div className="avatarInput">
+              <input
+                type="file"
+                id="avatar"
+                className="hidden"
+                onChange={saveAvatar}
+                accept="image/png, image/jpeg, image/jpg image/gif image/webp"
               />
-            )}
+            </div>
           </div>
+
           <div>
             <div className="grid grid-rows-4 gap-4">
               <input
