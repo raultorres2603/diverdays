@@ -32,13 +32,18 @@ export const MainMenu = () => {
             onClick={async () => {
               setLoading(true);
               setView(2);
-              const info = await User.getInfo(cookies?.session as string);
-              if (typeof info === "boolean") {
-                // Handle boolean case
-              } else {
-                setUser(info);
+              try {
+                const info = await User.getInfo(cookies?.session as string);
+                if (typeof info === "boolean") {
+                  // Handle boolean case
+                } else {
+                  setUser(info);
+                }
+                setLoading(false);
+              } catch (error) {
+                setLoading(false);
+                console.log(error);
               }
-              setLoading(false);
             }}
           >
             <UserIcon className="w-full h-1/2" />

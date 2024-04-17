@@ -9,6 +9,7 @@ import { useState } from "react";
 import { ReactCookieProps } from "react-cookie";
 import { useCookies } from "react-cookie";
 import User from "../classes/User";
+import toast from "react-hot-toast";
 
 type ContextType = {
   view: number | null;
@@ -35,22 +36,29 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
     } else {
       setView(1);
       setLoading(true);
-      const fetchUser = async () => {
-        const userInfo = await User.getInfo(cookies?.session as string);
-        if (userInfo instanceof User) {
-          setUser(userInfo);
-        } else {
-          // Handle the case where the promise resolves to a boolean
-        }
-        setLoading(false);
-      };
-      fetchUser();
-      console.log(cookies);
+      try {
+        const fetchUser = async () => {
+          try {
+            const userInfo = await User.getInfo(cookies?.session as string);
+            if (userInfo instanceof User) {
+              setUser(userInfo);
+            }
+            setLoading(false);
+          } catch (error) {
+            setLoading(false);
+            console.log(error);
+          }
+        };
+        fetchUser();
+        console.log(cookies);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [cookies]);
 
   useEffect(() => {
-    if (view == 0) {
+    if (view == 0 && cookies.session) {
       removeCookies("session");
     }
   }, [view]);

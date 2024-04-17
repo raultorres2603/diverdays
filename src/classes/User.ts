@@ -174,10 +174,17 @@ export default class User {
           userId: userId,
         }),
       });
-      const response = await compU.json();
-      toast.dismiss(loadComp);
-      console.log(response);
-      return Object.setPrototypeOf(response, User.prototype) as User;
+      try {
+        const response = await compU.json();
+        toast.dismiss(loadComp);
+        console.log(response);
+        return Object.setPrototypeOf(response, User.prototype) as User;
+      } catch (error) {
+        console.log(error);
+        toast.dismiss(loadComp);
+        toast.error("Error al convertir JSON");
+        return false;
+      }
     } catch (error) {
       toast.dismiss(loadComp);
       toast.error("Error al iniciar sesión");
