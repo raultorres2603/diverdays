@@ -74,6 +74,7 @@ export const Profile = () => {
         if (reader.result) {
           console.log(reader.result);
           user.avatar = reader.result as string;
+          toast.success("Imagen actualizada");
         }
       };
     }
