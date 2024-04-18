@@ -124,7 +124,7 @@ export const Profile = () => {
           <div className="grid grid-rows-2">
             {" "}
             <div
-              className=" rounded-full w-full h-1/2 my-auto lg:my-0 mr-5 transition-all ease-in-out active:scale-90 duration-300"
+              className=" rounded-full w-full h-1/2 lg:my-0 mr-5 transition-all ease-in-out active:scale-90 duration-300"
               onClick={pushIMG}
             >
               {!user.avatar ? (
@@ -148,7 +148,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <div className="grid grid-rows-4 lg:grid-cols-2 gap-4">
+            <div className="grid grid-rows-4 lg:grid-cols-4 gap-4">
               <input
                 className={`form-control border-4 text-xl w-full h-auto lg:h-1/2 text-center rounded-lg border-sky-300`}
                 onInput={handleUpdate}
@@ -184,8 +184,8 @@ export const Profile = () => {
                 <option value="0">Público</option>
               </select>
 
-              <div className="birthday">
-                <div className="grid grid-rows-3 gap-2">
+              <div className="birthday mx-auto">
+                <div className="grid grid-rows-1 gap-2">
                   <div className="birthdayText text-2xl">Cumpleaños</div>
                   <input
                     className={`form-control border-4 text-xl  w-full h-auto text-center rounded-lg border-sky-300`}
