@@ -124,7 +124,7 @@ export const Profile = () => {
           <div className="grid grid-rows-2">
             {" "}
             <div
-              className=" rounded-full w-full h-1/2 mr-5 transition-all ease-in-out active:scale-90 duration-300"
+              className=" rounded-full w-full h-1/2 my-auto lg:my-0 mr-5 transition-all ease-in-out active:scale-90 duration-300"
               onClick={pushIMG}
             >
               {!user.avatar ? (

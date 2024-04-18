@@ -21,14 +21,22 @@ export const MainMenu = () => {
   };
   return (
     <>
-      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 mb-9 select-none	">
+      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 select-none	">
         Menu
       </h1>
-      <div className="grid grid-cols-2 gap-4">
+      {user.birthday && (
+        <div className="mx-auto transition-all ease-in-out text-sm mb-3 mt-2 w-max text-center rounded-lg text-white bg-indigo-700 dark:bg-zinc-500 p-1 opacity-100">
+          {Math.round(
+            (new Date() - new Date(user.birthday)) / (1000 * 60 * 60 * 24)
+          )}{" "}
+          diverdias
+        </div>
+      )}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <div className="relative">
           <button
             type="button"
-            className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
+            className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
             onClick={async () => {
               setLoading(true);
               setView(2);
@@ -47,17 +55,6 @@ export const MainMenu = () => {
             }}
           >
             <UserIcon className="w-full h-1/2" />
-            {user.birthday && (
-              <div className="absolute bottom-0 right-0">
-                <div className=" transition-all ease-in-out text-sm hover:text-xl rounded-lg text-white bg-indigo-700 dark:bg-zinc-500 p-1 opacity-100">
-                  {Math.round(
-                    (new Date() - new Date(user.birthday)) /
-                      (1000 * 60 * 60 * 24)
-                  )}{" "}
-                  diverdias
-                </div>
-              </div>
-            )}
           </button>
         </div>
         <div>

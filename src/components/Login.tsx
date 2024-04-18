@@ -39,14 +39,14 @@ export const Login = () => {
 
   return (
     <div className="login">
-      <h1 className="text-7xl font-bold dark:text-indigo-300 text-indigo-800 select-none	">
+      <h1 className="text-7xl font-bold dark:text-indigo-300 text-indigo-800 select-none">
         DiverAPP
       </h1>
-      <div className="grid grid-rows-1 gap-10 mt-9">
+      <div className="grid grid-rows-1 gap-10 mt-9 lg:justify-center">
         <input
           type="email"
           id={"email"}
-          className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+          className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 lg:w-100 lg:text-3xl text-white ${
             loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
           } bg-indigo-500 rounded-lg`}
           onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
@@ -59,7 +59,7 @@ export const Login = () => {
             <input
               type="password"
               id={"pass"}
-              className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+              className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 lg:w-100 lg:w-100 lg:text-3xl text-white ${
                 loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
               }bg-indigo-500 rounded-lg`}
               onInput={(e) => setPass((e.target as HTMLInputElement).value)}
@@ -72,7 +72,7 @@ export const Login = () => {
           <>
             <div className="grid grid-cols-1 gap-4">
               <button
-                className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 text-white ${
+                className={`text-2xl transition ease-in-out focus:scale-105 hover:scale-105 lg:text-3xl text-white ${
                   loginIn ? "bg-slate-400 opacity-50" : "bg-indigo-500"
                 } rounded-lg w-100`}
                 disabled={loginIn}
