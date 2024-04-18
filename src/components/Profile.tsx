@@ -148,23 +148,23 @@ export const Profile = () => {
           </div>
 
           <div>
-            <div className="grid grid-rows-4 gap-4">
+            <div className="grid grid-rows-4 lg:grid-cols-2 gap-4">
               <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                className={`form-control border-4 text-xl w-full h-auto lg:h-1/2 text-center rounded-lg border-sky-300`}
                 onInput={handleUpdate}
                 id="name"
                 defaultValue={user.name}
                 placeholder="Nombre"
               />
               <input
-                className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                className={`form-control border-4 text-xl w-full h-auto lg:h-1/2 text-center rounded-lg border-sky-300`}
                 onInput={handleUpdate}
                 id="fname"
                 defaultValue={user.fname}
                 placeholder="Apellido"
               />
               <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                className={`form-select rounded-lg border-4 text-xl lg:h-1/2 w-full h-auto text-center border-sky-300`}
                 onChange={handleUpdate}
                 id="genre"
                 defaultValue={user.genre ? user.genre : "N"}
@@ -174,7 +174,7 @@ export const Profile = () => {
                 <option value="M">Mujer</option>
               </select>
               <select
-                className={`form-select rounded-lg border-4 text-xl w-full h-auto text-center border-sky-300`}
+                className={`form-select rounded-lg border-4 text-xl lg:h-1/2 w-full h-auto text-center border-sky-300`}
                 id="profile"
                 onChange={handleUpdate}
                 defaultValue={user.profile ? user.profile : "N"}
@@ -183,12 +183,12 @@ export const Profile = () => {
                 <option value="1">Privado</option>
                 <option value="0">Público</option>
               </select>
-              <div className="border-2"></div>{" "}
+
               <div className="birthday">
                 <div className="grid grid-rows-3 gap-2">
                   <div className="birthdayText text-2xl">Cumpleaños</div>
                   <input
-                    className={`form-control border-4 text-xl w-full h-auto text-center rounded-lg border-sky-300`}
+                    className={`form-control border-4 text-xl  w-full h-auto text-center rounded-lg border-sky-300`}
                     id="birthday"
                     defaultValue={
                       user && user.birthday && `${new Date(user.birthday)}`
