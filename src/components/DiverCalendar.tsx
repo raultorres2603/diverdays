@@ -1,19 +1,14 @@
 import { useContext, Fragment, useRef, useState } from "react";
 import { mContext } from "../contexts/MainContext";
 import User from "../classes/User";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import {
-  ArrowLeftEndOnRectangleIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { toast } from "react-hot-toast";
 import { Dialog, Transition } from "@headlessui/react";
 
 export const DiverCalendar = () => {
-  const { setView, user, loading } = useContext(mContext) || {
+  const { setView, loading } = useContext(mContext) || {
     setView: () => {},
     user: new User("", ""),
     loading: true,

@@ -9,7 +9,6 @@ import { useState } from "react";
 import { ReactCookieProps } from "react-cookie";
 import { useCookies } from "react-cookie";
 import User from "../classes/User";
-import toast from "react-hot-toast";
 
 type ContextType = {
   view: number | null;
