@@ -61,8 +61,21 @@ export const MainMenu = () => {
           <button
             type="button"
             className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
-            onClick={() => {
+            onClick={async () => {
+              setLoading(true);
               setView(3);
+              try {
+                const info = await User.getInfo(cookies?.session as string);
+                if (typeof info === "boolean") {
+                  // Handle boolean case
+                } else {
+                  setUser(info);
+                }
+                setLoading(false);
+              } catch (error) {
+                setLoading(false);
+                console.log(error);
+              }
             }}
           >
             <CalendarDaysIcon className="w-full h-1/2" />
