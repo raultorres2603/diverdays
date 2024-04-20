@@ -82,6 +82,9 @@ export const Profile = () => {
 
   return loading ? (
     <div>
+      <div className="title text-4xl font-bold dark:text-sky-200 text-sky-700 select-none mb-4">
+        Perfil
+      </div>
       <div className="grid grid-cols-2">
         {" "}
         <div className="rounded-full w-auto h-1/2 mr-5">
@@ -119,6 +122,9 @@ export const Profile = () => {
     </div>
   ) : (
     <>
+      <div className="title text-4xl font-bold dark:text-sky-200 text-sky-700 select-none mb-5">
+        Perfil
+      </div>
       <div>
         <div className="grid grid-cols-2 gap-5">
           <div className="grid grid-rows-2">
@@ -148,7 +154,7 @@ export const Profile = () => {
           </div>
 
           <div>
-            <div className="grid grid-rows-4 lg:grid-cols-4 gap-4">
+            <div className="grid grid-rows-4 lg:grid-cols-2 gap-4">
               <input
                 className={`form-control border-4 text-xl w-full h-auto lg:h-1/2 text-center rounded-lg border-sky-300`}
                 onInput={handleUpdate}
@@ -221,7 +227,7 @@ export const Profile = () => {
         <CheckCircleIcon
           stroke="green"
           onClick={updateUser}
-          className="transition ease-in-out w-14 h-auto fixed bottom-5 right-1/2 active:scale-90 hover:scale-150"
+          className="transition ease-in-out w-14 h-auto fixed bottom-5 left-20 active:scale-90 hover:scale-150"
         />
       </div>
     </>

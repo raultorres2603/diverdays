@@ -3,6 +3,7 @@ import { Login } from "./Login";
 import { MainMenu } from "./MainMenu";
 import { mContext } from "../contexts/MainContext";
 import { Profile } from "./Profile";
+import { DiverCalendar } from "./DiverCalendar";
 
 export const View = () => {
   const { view } = useContext(mContext) || { view: 0 };
@@ -26,6 +27,11 @@ export const View = () => {
             <Profile />
           </>
         );
+        break;
+
+      case 3:
+        return <DiverCalendar />;
+        break;
 
       default:
         break;
