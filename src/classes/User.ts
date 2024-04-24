@@ -114,7 +114,6 @@ export default class User {
   }
 
   public async actDiverDay(diverday: number): Promise<boolean> {
-    this.addDiverDay(diverday);
     const loadComp = toast.loading("Añadiendo diversario...");
     try {
       const updateU = await fetch(
@@ -134,7 +133,12 @@ export default class User {
       if (response.res == "OK") {
         toast.dismiss(loadComp);
         toast.success("Diversario añadido!");
+        this.addDiverDay(diverday);
         return true;
+      } else if (response.res == "EXISTS") {
+        toast.dismiss(loadComp);
+        toast.error("Ya existe este diversario");
+        return false;
       } else {
         toast.dismiss(loadComp);
         toast.error("Error al añadir el diversario");
