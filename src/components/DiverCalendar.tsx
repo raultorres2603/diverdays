@@ -104,7 +104,7 @@ export const DiverCalendar = () => {
                       : comprobDiverDay(diverday) == "tomorrow"
                       ? "bg-sky-800 dark:bg-sky-600 hover:shadow-sky-300/50 active:bg-sky-500 dark:active:bg-sky-700 active:shadow-sky-300/50"
                       : "bg-lime-600 dark:bg-lime-500 hover:shadow-lime-300/50 active:bg-lime-500 dark:active:bg-lime-700 active:shadow-lime-300/50"
-                  } rounded-lg hover:scale-105 hover:shadow-lg hover:border-5 active:shadow-xl active:border-5 active:scale-90`}
+                  } rounded-lg hover:scale-105 hover:shadow-lg hover:border-5 active:shadow-xl active:border-5 active:scale-90 select-none`}
                 >
                   {diverday}
                 </div>
