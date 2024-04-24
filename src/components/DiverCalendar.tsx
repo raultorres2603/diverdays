@@ -100,7 +100,7 @@ export const DiverCalendar = () => {
                   key={index}
                   className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white ${
                     comprobDiverDay(diverday) == "past"
-                      ? "bg-slate-800 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
+                      ? "bg-slate-600 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
                       : comprobDiverDay(diverday) == "tomorrow"
                       ? "bg-sky-800 dark:bg-sky-600 hover:shadow-sky-300/50 active:bg-sky-500 dark:active:bg-sky-700 active:shadow-sky-300/50"
                       : "bg-lime-600 dark:bg-lime-500 hover:shadow-lime-300/50 active:bg-lime-500 dark:active:bg-lime-700 active:shadow-lime-300/50"
