@@ -16,7 +16,7 @@ export const DiverCalendar = () => {
 
   const [diverday, setDiverDay] = useState(0);
 
-  const [open, setOpen] = useState(false);
+  const [openDiverDaySet, setOpenDiverDaySet] = useState(false);
 
   const cancelButtonRef = useRef(null);
 
@@ -81,7 +81,7 @@ export const DiverCalendar = () => {
               type="button"
               className="transition-all ease-in-out text-xl lg:text-2xl hover:scale-125 hover:shadow-xl hover:shadow-violet-500/50 dark:hover:shadow-violet-300/50 ring-violet-500/-50 hover:border-5 active:bg-violet-500 dark:active:bg-violet-700 active:shadow-xl active:shadow-violet-300/50 rounded-lg text-white bg-violet-700 dark:bg-violet-700 bg-sky-700 dark:bg-zinc-900 active:scale-90 hover:bg-violet-600 dark:hover:bg-violet-800"
               onClick={() => {
-                setOpen(true);
+                setOpenDiverDaySet(true);
               }}
             >
               Añadir diversario
@@ -129,8 +129,8 @@ export const DiverCalendar = () => {
         className="transition ease-in-out w-14 h-auto fixed bottom-5 left-5 active:scale-90 hover:scale-150"
       />
 
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Transition.Root show={openDiverDaySet} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setOpenDiverDaySet}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -202,7 +202,7 @@ export const DiverCalendar = () => {
                     <button
                       type="button"
                       className="transition-all ease-in-out mt-3 inline-flex bg-red-500 hover:bg-red-600 hover:scale-105 w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={() => setOpen(false)}
+                      onClick={() => setOpenDiverDaySet(false)}
                       ref={cancelButtonRef}
                     >
                       Cancel
