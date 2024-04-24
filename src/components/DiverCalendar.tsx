@@ -8,15 +8,48 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Dialog, Transition } from "@headlessui/react";
 
 export const DiverCalendar = () => {
-  const { setView, loading } = useContext(mContext) || {
+  const { setView, loading, user } = useContext(mContext) || {
     setView: () => {},
     user: new User("", ""),
     loading: true,
   };
 
+  const [diverday, setDiverDay] = useState(0);
+
   const [open, setOpen] = useState(false);
 
   const cancelButtonRef = useRef(null);
+
+  function addDiverDay() {
+    const diverCount = Math.round(
+      (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
+    );
+    if (diverday && diverday > diverCount) {
+      try {
+        user.actDiverDay(diverday);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log(diverday, diverCount);
+      alert("DiverDay tiene que se superior a tu total");
+    }
+  }
+
+  function comprobDiverDay(diverday: number): string {
+    const today: number = Math.round(
+      (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
+    );
+    const difference: number = today - diverday;
+    console.log(difference);
+    if (difference > 0) {
+      return "past";
+    } else if (difference == 0) {
+      return "today";
+    } else {
+      return "tomorrow";
+    }
+  }
 
   return (
     <>
@@ -29,6 +62,12 @@ export const DiverCalendar = () => {
             <Skeleton
               count={1}
               className="text-xl lg:text-2xl lg:w-1/4 w-3/4"
+            />
+          </div>
+          <div className="diverDays mt-5">
+            <Skeleton
+              count={1}
+              className="text-xl lg:text-2xl lg:w-1/4 w-3/4 mb-3"
             />
           </div>
         </>
@@ -47,6 +86,29 @@ export const DiverCalendar = () => {
             >
               Añadir diversario
             </button>
+          </div>
+          <div className="diverTitle mt-5">
+            <div className="text-3xl lg:text-5xl font-bold dark:text-sky-200 text-sky-700 select-none mb-4">
+              MyDiverDays
+            </div>
+          </div>
+          <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4">
+            {user.diverdays
+              .sort((a, b) => a - b)
+              .map((diverday, index) => (
+                <div
+                  key={index}
+                  className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white ${
+                    comprobDiverDay(diverday) == "past"
+                      ? "bg-slate-800 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
+                      : comprobDiverDay(diverday) == "tomorrow"
+                      ? "bg-sky-800 dark:bg-sky-600 hover:shadow-sky-300/50 active:bg-sky-500 dark:active:bg-sky-700 active:shadow-sky-300/50"
+                      : "bg-lime-600 dark:bg-lime-500 hover:shadow-lime-300/50 active:bg-lime-500 dark:active:bg-lime-700 active:shadow-lime-300/50"
+                  } rounded-lg hover:scale-105 hover:shadow-lg hover:border-5 active:shadow-xl active:border-5 active:scale-90`}
+                >
+                  {diverday}
+                </div>
+              ))}
           </div>
         </>
       )}
@@ -107,6 +169,25 @@ export const DiverCalendar = () => {
                             Selecciona la fecha que quieres añadir
                           </p>
                         </div>
+                        <div className="mt-2">
+                          <p className="text-md text-white rounded-lg text-center">
+                            <input
+                              type="number"
+                              id="diverday"
+                              defaultValue={Math.round(
+                                (new Date() - new Date(user.birthday)) /
+                                  1000 /
+                                  24 /
+                                  60 /
+                                  60
+                              )}
+                              onInput={(e) => {
+                                console.log(e.currentTarget.value);
+                                setDiverDay(parseInt(e.currentTarget.value));
+                              }}
+                            />
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -114,7 +195,7 @@ export const DiverCalendar = () => {
                     <button
                       type="button"
                       className="transition-all ease-in-out inline-flex w-full hover:scale-105 justify-center rounded-md bg-lime-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-lime-700 sm:ml-3 sm:w-auto"
-                      onClick={() => setOpen(false)}
+                      onClick={() => addDiverDay()}
                     >
                       Añadir
                     </button>

@@ -11,6 +11,7 @@ export default class User {
   private _avatar: string;
   private _genre: string;
   private _profile: string;
+  private _diverdays: Array<number>;
 
   constructor(
     public vEmail: string,
@@ -26,41 +27,46 @@ export default class User {
     this._avatar = "";
     this._genre = "";
     this._profile = "";
+    this._diverdays = [];
   }
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  get fname() {
+  get diverdays(): number[] {
+    return this._diverdays;
+  }
+
+  get fname(): string {
     return this._fname;
   }
 
-  get birthday() {
+  get birthday(): Date {
     return this._birthday;
   }
 
-  get avatar() {
+  get avatar(): string {
     return this._avatar;
   }
 
-  get genre() {
+  get genre(): string {
     return this._genre;
   }
 
-  get profile() {
+  get profile(): string {
     return this._profile;
   }
 
-  get email() {
+  get email(): string {
     return this._email;
   }
 
-  get id() {
+  get id(): string {
     return this._id;
   }
 
-  get password() {
+  get password(): string {
     return this._password;
   }
 
@@ -70,6 +76,10 @@ export default class User {
 
   set fname(vFname: string) {
     this._fname = vFname;
+  }
+
+  set diverdays(vDiverdays: Array<number>) {
+    this._diverdays = vDiverdays;
   }
 
   set birthday(vBirthday: Date) {
@@ -97,6 +107,45 @@ export default class User {
 
   set id(vId: string) {
     this._id = vId;
+  }
+
+  private addDiverDay(diverday: number) {
+    this.diverdays.push(diverday);
+  }
+
+  public async actDiverDay(diverday: number): Promise<boolean> {
+    this.addDiverDay(diverday);
+    const loadComp = toast.loading("Añadiendo diversario...");
+    try {
+      const updateU = await fetch(
+        `${import.meta.env.VITE_H}/users/addDiverDay`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: this.id,
+            diverday: diverday,
+          }),
+        }
+      );
+      const response = await updateU.json();
+      if (response.res == "OK") {
+        toast.dismiss(loadComp);
+        toast.success("Diversario añadido!");
+        return true;
+      } else {
+        toast.dismiss(loadComp);
+        toast.error("Error al añadir el diversario");
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+      toast.dismiss(loadComp);
+      toast.error("Error al anadir el diversario");
+      return false;
+    }
   }
 
   public async updateU(): Promise<void> {
