@@ -89,7 +89,7 @@ export const DiverCalendar = () => {
               Añadir diversario
             </button>
           </div>
-          <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4 h-52 lg:h-46 overflow-auto border-double border-8 border-sky-700 dark:border-sky-500 p-3 rounded-lg">
+          <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4 h-52 lg:h-46 overflow-auto border-double border-8 border-sky-700 dark:border-sky-200 p-3 rounded-lg">
             {user.diverdays
               .sort((a, b) => a - b)
               .map((diverday, index) => (
