@@ -73,13 +73,15 @@ export const DiverCalendar = () => {
         </>
       ) : (
         <>
-          <div className="title text-4xl lg:text-6xl font-bold dark:text-sky-200 text-sky-700 select-none mb-4">
-            DiverCalendar
+          <div className="diverTitle mt-5">
+            <div className="text-3xl lg:text-5xl font-bold dark:text-sky-200 text-sky-700 select-none mb-4">
+              MyDiverDays
+            </div>
           </div>
           <div className="addButton">
             <button
               type="button"
-              className="transition-all ease-in-out text-xl lg:text-2xl hover:scale-125 hover:shadow-xl hover:shadow-violet-500/50 dark:hover:shadow-violet-300/50 ring-violet-500/-50 hover:border-5 active:bg-violet-500 dark:active:bg-violet-700 active:shadow-xl active:shadow-violet-300/50 rounded-lg text-white bg-violet-700 dark:bg-violet-700 bg-sky-700 dark:bg-zinc-900 active:scale-90 hover:bg-violet-600 dark:hover:bg-violet-800"
+              className="mb-3 border-none transition-all ease-in-out text-xl lg:text-2xl hover:scale-125 hover:shadow-lg hover:shadow-violet-500/50 dark:hover:shadow-violet-300/50 ring-violet-500/-50 hover:border-5 active:bg-violet-500 dark:active:bg-violet-700 active:shadow-lg active:shadow-violet-300/50 rounded-lg text-white bg-violet-700 dark:bg-violet-700 bg-sky-700 dark:bg-zinc-900 active:scale-90 hover:bg-violet-600 dark:hover:bg-violet-800"
               onClick={() => {
                 setOpenDiverDaySet(true);
               }}
@@ -87,18 +89,13 @@ export const DiverCalendar = () => {
               Añadir diversario
             </button>
           </div>
-          <div className="diverTitle mt-5">
-            <div className="text-3xl lg:text-5xl font-bold dark:text-sky-200 text-sky-700 select-none mb-4">
-              MyDiverDays
-            </div>
-          </div>
-          <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4">
+          <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4 h-52 lg:h-46 overflow-auto border-double border-8 border-sky-700 dark:border-sky-500 p-3 rounded-lg">
             {user.diverdays
               .sort((a, b) => a - b)
               .map((diverday, index) => (
                 <div
                   key={index}
-                  className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white ${
+                  className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white border-none ${
                     comprobDiverDay(diverday) == "past"
                       ? "bg-slate-600 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
                       : comprobDiverDay(diverday) == "tomorrow"
