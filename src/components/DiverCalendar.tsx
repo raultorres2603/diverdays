@@ -81,7 +81,7 @@ export const DiverCalendar = () => {
           <div className="addButton">
             <button
               type="button"
-              className="mb-3 border-none transition-all ease-in-out text-xl lg:text-2xl hover:scale-125 hover:shadow-lg hover:shadow-violet-500/50 dark:hover:shadow-violet-300/50 ring-violet-500/-50 hover:border-5 active:bg-violet-500 dark:active:bg-violet-700 active:shadow-lg active:shadow-violet-300/50 rounded-lg text-white bg-violet-700 dark:bg-violet-700 bg-sky-700 dark:bg-zinc-900 active:scale-90 hover:bg-violet-600 dark:hover:bg-violet-800"
+              className="mb-3 border-none transition-all ease-in-out text-xl lg:text-2xl hover:scale-105 hover:shadow-lg hover:shadow-violet-500/50 dark:hover:shadow-violet-300/50 ring-violet-500/-50 hover:border-5 active:bg-violet-500 dark:active:bg-violet-700 active:shadow-lg active:shadow-violet-300/50 rounded-lg text-white bg-violet-700 dark:bg-violet-700 bg-sky-700 dark:bg-zinc-900 active:scale-90 hover:bg-violet-600 dark:hover:bg-violet-800"
               onClick={() => {
                 setOpenDiverDaySet(true);
               }}
