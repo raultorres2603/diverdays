@@ -4,11 +4,13 @@ import User from "../classes/User";
 import {
   ArrowLeftEndOnRectangleIcon,
   PlusIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Dialog, Transition } from "@headlessui/react";
+import toast from "react-hot-toast";
 
 export const DiverCalendar = () => {
   const { setView, loading, user } = useContext(mContext) || {
@@ -56,6 +58,31 @@ export const DiverCalendar = () => {
     } else {
       return "tomorrow";
     }
+  }
+
+  function addDiverPhotos(): void {
+    document.getElementById("diverFoto")?.click();
+  }
+
+  function pushDiverPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0].size > 1000000) {
+      toast.error("Tamaño de imagen demasiado grande.");
+      return;
+    }
+
+    if (diverPhotos.length >= 4) {
+      toast.error("Solo puedes subir 4 fotos.");
+      return;
+    }
+
+    if (e.target.files && e.target.files[0]) {
+      setDiverPhotos([...diverPhotos, URL.createObjectURL(e.target.files[0])]);
+    }
+  }
+
+  function removeDiverPhoto(i: number) {
+    diverPhotos.splice(i, 1);
+    setDiverPhotos([...diverPhotos]);
   }
 
   return (
@@ -276,20 +303,36 @@ export const DiverCalendar = () => {
                                   type="file"
                                   id="diverFoto"
                                   className="hidden"
+                                  onChange={(e) => pushDiverPhoto(e)}
                                 />
-                                <div className="transition-all ease-in-out inputBox w-20 h-20 border-dashed border-4 border-sky-200 mx-auto hover:cursor-pointer hover:border-sky-300 hover:scale-105">
+                                <div className="transition-all ease-in-out inputBox w-20 h-20 active:scale-90 border-dashed border-4 border-sky-200 mx-auto hover:cursor-pointer hover:border-sky-300 hover:scale-105">
                                   <div className="plusMark">
                                     <PlusIcon
                                       color="lightblue"
                                       className="transition-all ease-in-out w-18 my-auto mx-auto hover:scale-105"
+                                      onClick={() => addDiverPhotos()}
                                     />
                                   </div>
+                                </div>
+                              </div>
+                              <div className="imgs mt-5 border border-4 border-double rounded-lg border-slate-300">
+                                <div className="imgsContainer grid grid-cols-2 gap-2 my-2 justify-items-center">
+                                  {diverPhotos.map((photo, index) => (
+                                    <div className="img relative">
+                                      <img
+                                        src={photo}
+                                        className="transition-all ease-in-out w-auto h-24 lg:h-auto lg:w-60 rounded-full hover:scale-105 hover:grayscale active:grayscale active:scale-90"
+                                        onClick={() => removeDiverPhoto(index)}
+                                      />
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                               <div className="comments mt-4">
                                 <input
                                   type="text"
                                   id="diverComment"
+                                  accept="image/*"
                                   placeholder="Introduce un comentario"
                                   className="rounded-lg text-sm text-black dark:text-white px-3 py-2 bg-slate-200 dark:bg-slate-600 border border-slate-300 dark:border-slate-500"
                                 />
