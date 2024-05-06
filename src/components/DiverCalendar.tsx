@@ -4,7 +4,6 @@ import User from "../classes/User";
 import {
   ArrowLeftEndOnRectangleIcon,
   PlusIcon,
-  XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";
