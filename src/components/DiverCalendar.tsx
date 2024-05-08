@@ -28,7 +28,7 @@ export const DiverCalendar = () => {
 
   const cancelButtonRef = useRef(null);
 
-  function addDiverDay() {
+  function addDiverDay(): void {
     const diverCount = Math.round(
       (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
     );
@@ -76,10 +76,11 @@ export const DiverCalendar = () => {
 
     if (e.target.files && e.target.files[0]) {
       setDiverPhotos([...diverPhotos, URL.createObjectURL(e.target.files[0])]);
+      return;
     }
   }
 
-  function removeDiverPhoto(i: number) {
+  function removeDiverPhoto(i: number): void {
     diverPhotos.splice(i, 1);
     setDiverPhotos([...diverPhotos]);
   }
