@@ -1,6 +1,11 @@
 import md5 from "crypto-js/md5";
 import toast from "react-hot-toast";
 
+type DiverDay = {
+  diverDay: number;
+  diverPhotos: Array<string>;
+};
+
 export default class User {
   private _email: string;
   private _password: string;
@@ -11,7 +16,7 @@ export default class User {
   private _avatar: string;
   private _genre: string;
   private _profile: string;
-  private _diverdays: Array<number>;
+  private _diverdays: Array<DiverDay>;
 
   constructor(
     public vEmail: string,
@@ -34,7 +39,7 @@ export default class User {
     return this._name;
   }
 
-  get diverdays(): number[] {
+  get diverdays(): DiverDay[] {
     return this._diverdays;
   }
 
@@ -78,7 +83,7 @@ export default class User {
     this._fname = vFname;
   }
 
-  set diverdays(vDiverdays: Array<number>) {
+  set diverdays(vDiverdays: Array<DiverDay>) {
     this._diverdays = vDiverdays;
   }
 
@@ -109,11 +114,41 @@ export default class User {
     this._id = vId;
   }
 
-  private addDiverDay(diverday: number) {
+  private addDiverDay(diverday: DiverDay): void {
     this.diverdays.push(diverday);
   }
 
-  public async actDiverDay(diverday: number): Promise<boolean> {
+  public async celebDiverDay(
+    diverday: DiverDay,
+    diverPhotos: string[]
+  ): Promise<void> {
+    const loadComp = toast.loading("Actualizando diversario...");
+    try {
+      const updateU = await fetch(
+        `${import.meta.env.VITE_H}/users/celebDiverDay`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: this.id,
+            diverday: diverday,
+            diverPhotos: diverPhotos,
+          }),
+        }
+      );
+      const response = await updateU.json();
+      if (response.res == "OK") {
+        toast.dismiss(loadComp);
+        toast.success("Diversario anadido!");
+      }
+    } catch (err) {
+      toast.dismiss(loadComp);
+      toast.error("No se ha podido actualizar el diversario!");
+    }
+  }
+  public async actDiverDay(diverday: DiverDay): Promise<boolean> {
     const loadComp = toast.loading("Añadiendo diversario...");
     try {
       const updateU = await fetch(

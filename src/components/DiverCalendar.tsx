@@ -11,6 +11,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Dialog, Transition } from "@headlessui/react";
 import toast from "react-hot-toast";
 
+type DiverDay = {
+  diverDay: number;
+  diverPhotos: Array<string>;
+};
+
 export const DiverCalendar = () => {
   const { setView, loading, user } = useContext(mContext) || {
     setView: () => {},
@@ -18,12 +23,12 @@ export const DiverCalendar = () => {
     loading: true,
   };
 
-  const [diverday, setDiverDay] = useState(0);
+  const [diverday, setDiverDay] = useState<DiverDay>({} as DiverDay);
 
   const [openDiverDaySet, setOpenDiverDaySet] = useState(false);
   const [openCelebDiver, setOpenCelebDiver] = useState(false);
 
-  const [selectedDiver, setSelectedDiver] = useState(0);
+  const [selectedDiver, setSelectedDiver] = useState<DiverDay>({} as DiverDay);
   const [diverPhotos, setDiverPhotos] = useState<string[]>([]);
 
   const cancelButtonRef = useRef(null);
@@ -32,7 +37,7 @@ export const DiverCalendar = () => {
     const diverCount = Math.round(
       (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
     );
-    if (diverday && diverday > diverCount) {
+    if (diverday && diverday.diverDay >= diverCount) {
       try {
         user.actDiverDay(diverday);
       } catch (error) {
@@ -44,11 +49,11 @@ export const DiverCalendar = () => {
     }
   }
 
-  function comprobDiverDay(diverday: number): string {
+  function comprobDiverDay(diverday: DiverDay): string {
     const today: number = Math.round(
       (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
     );
-    const difference: number = today - diverday;
+    const difference: number = today - diverday.diverDay;
     console.log(difference);
     if (difference > 0) {
       return "past";
@@ -61,6 +66,10 @@ export const DiverCalendar = () => {
 
   function addDiverPhotos(): void {
     document.getElementById("diverFoto")?.click();
+  }
+
+  function celebDiverday(): void {
+    user.celebDiverDay(selectedDiver, diverPhotos);
   }
 
   function pushDiverPhoto(e: React.ChangeEvent<HTMLInputElement>) {
@@ -124,26 +133,27 @@ export const DiverCalendar = () => {
             </button>
           </div>
           <div className="diverdays mt-2 grid lg:grid-cols-4 grid-cols-2 gap-4 h-52 lg:h-46 overflow-auto border-double border-8 border-sky-700 dark:border-sky-200 p-3 rounded-lg">
-            {user.diverdays
-              .sort((a, b) => a - b)
-              .map((diverday, index) => (
-                <div
-                  key={index}
-                  className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white border-none ${
-                    comprobDiverDay(diverday) == "past"
-                      ? "bg-slate-600 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
-                      : comprobDiverDay(diverday) == "tomorrow"
-                      ? "bg-sky-800 dark:bg-sky-600 hover:shadow-sky-300/50 active:bg-sky-500 dark:active:bg-sky-700 active:shadow-sky-300/50"
-                      : "bg-lime-600 dark:bg-lime-500 hover:shadow-lime-300/50 active:bg-lime-500 dark:active:bg-lime-700 active:shadow-lime-300/50"
-                  } rounded-lg hover:scale-105 hover:shadow-lg hover:border-5 active:shadow-xl active:border-5 active:scale-90 select-none`}
-                  onClick={() => {
-                    setSelectedDiver(diverday);
-                    setOpenCelebDiver(true);
-                  }}
-                >
-                  {diverday}
-                </div>
-              ))}
+            {user.diverdays &&
+              user.diverdays
+                .sort((a, b) => a.diverDay - b.diverDay)
+                .map((diverday: DiverDay, index: number) => (
+                  <div
+                    key={index}
+                    className={`transition-all ease-in-out diverday text-3xl lg:text-5xl text-white border-none ${
+                      comprobDiverDay(diverday) == "past"
+                        ? "bg-slate-600 dark:bg-slate-500 hover:shadow-slate-300/50 active:bg-slate-500 dark:active:bg-slate-700 active:shadow-slate-300/50"
+                        : comprobDiverDay(diverday) == "tomorrow"
+                        ? "bg-sky-800 dark:bg-sky-600 hover:shadow-sky-300/50 active:bg-sky-500 dark:active:bg-sky-700 active:shadow-sky-300/50"
+                        : "bg-lime-600 dark:bg-lime-500 hover:shadow-lime-300/50 active:bg-lime-500 dark:active:bg-lime-700 active:shadow-lime-300/50"
+                    } rounded-lg hover:scale-105 hover:shadow-lg hover:border-5 active:shadow-xl active:border-5 active:scale-90 select-none`}
+                    onClick={() => {
+                      setSelectedDiver(diverday);
+                      setOpenCelebDiver(true);
+                    }}
+                  >
+                    {diverday.diverDay}
+                  </div>
+                ))}
           </div>
         </>
       )}
@@ -218,7 +228,10 @@ export const DiverCalendar = () => {
                               )}
                               onInput={(e) => {
                                 console.log(e.currentTarget.value);
-                                setDiverDay(parseInt(e.currentTarget.value));
+                                setDiverDay({
+                                  diverDay: parseInt(e.currentTarget.value),
+                                  diverPhotos: [],
+                                });
                               }}
                             />
                           </p>
@@ -347,6 +360,7 @@ export const DiverCalendar = () => {
                     <button
                       type="button"
                       className="transition-all ease-in-out inline-flex w-full hover:scale-105 justify-center rounded-md bg-lime-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-lime-700 sm:ml-3 sm:w-auto"
+                      onClick={() => celebDiverday()}
                     >
                       Añadir
                     </button>
