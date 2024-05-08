@@ -84,7 +84,13 @@ export const DiverCalendar = () => {
     }
 
     if (e.target.files && e.target.files[0]) {
-      setDiverPhotos([...diverPhotos, URL.createObjectURL(e.target.files[0])]);
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        if (reader.result) {
+          setDiverPhotos([...diverPhotos, reader.result as string]);
+        }
+      };
       return;
     }
   }
