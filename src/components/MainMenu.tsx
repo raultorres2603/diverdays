@@ -21,7 +21,7 @@ export const MainMenu = () => {
   };
   return (
     <>
-      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 select-none	">
+      <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 select-none mb-3	">
         Menu
       </h1>
       {user.birthday && (
