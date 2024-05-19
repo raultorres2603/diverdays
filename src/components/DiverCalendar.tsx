@@ -305,18 +305,42 @@ export const DiverCalendar = () => {
                         >
                           Celebra tu diversario
                         </Dialog.Title>
-                        <div className="mt-2">
-                          <p className="text-sm text-white">
-                            Actualiza tu diversario
-                          </p>
-                        </div>
                         <div className="mt-2 text-sm text-red-600 dark:text-red-400 font-bold">
                           {comprobDiverDay(selectedDiver) == "past" &&
-                            "No puedes celebrar un diversario pasado"}
+                            selectedDiver.diverPhotos &&
+                            selectedDiver.diverPhotos.length > 0 && (
+                              <>
+                                <div className="text-sky-200 mb-5 dark:text-sky-300 mx-auto text-sm">
+                                  Así se celebró el diversario:
+                                </div>
+                                <div className="text-red-600 dark:text-red-400 grid grid-cols-2 gap-4">
+                                  {selectedDiver.diverPhotos.map(
+                                    (photo, index) => (
+                                      <div className="img relative" key={index}>
+                                        <img
+                                          src={photo}
+                                          className="transition-all ease-in-out w-auto h-24 lg:h-auto lg:w-60 rounded-full hover:scale-105 hover:grayscale active:grayscale active:scale-90"
+                                        />
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              </>
+                            )}
+                          {comprobDiverDay(selectedDiver) == "past" &&
+                            selectedDiver.diverPhotos &&
+                            selectedDiver.diverPhotos.length == 0 && (
+                              <div className="text-red-600 dark:text-red-400">
+                                Este diversario no se celebró
+                              </div>
+                            )}
                           {comprobDiverDay(selectedDiver) == "tomorrow" &&
                             "No puedes celebrar un diversario que aún no ha pasado"}
                           {comprobDiverDay(selectedDiver) == "today" && (
                             <>
+                              <p className="text-sm text-white">
+                                Actualiza tu diversario
+                              </p>
                               <div className="inputFiles mt-4">
                                 <input
                                   type="file"
