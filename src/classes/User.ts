@@ -17,6 +17,7 @@ export default class User {
   private _genre: string;
   private _profile: string;
   private _diverdays: Array<DiverDay>;
+  private _friends: Array<User>;
 
   constructor(
     public vEmail: string,
@@ -33,46 +34,51 @@ export default class User {
     this._genre = "";
     this._profile = "";
     this._diverdays = [];
+    this._friends = [];
   }
 
-  get name(): string {
+  public get name(): string {
     return this._name;
   }
 
-  get diverdays(): DiverDay[] {
+  public get diverdays(): DiverDay[] {
     return this._diverdays;
   }
 
-  get fname(): string {
+  public get fname(): string {
     return this._fname;
   }
 
-  get birthday(): Date {
+  public get birthday(): Date {
     return this._birthday;
   }
 
-  get avatar(): string {
+  public get avatar(): string {
     return this._avatar;
   }
 
-  get genre(): string {
+  public get genre(): string {
     return this._genre;
   }
 
-  get profile(): string {
+  public get profile(): string {
     return this._profile;
   }
 
-  get email(): string {
+  public get email(): string {
     return this._email;
   }
 
-  get id(): string {
+  public get id(): string {
     return this._id;
   }
 
-  get password(): string {
+  public get password(): string {
     return this._password;
+  }
+
+  public get friends(): Array<User> {
+    return this._friends;
   }
 
   set name(vName: string) {
@@ -114,8 +120,16 @@ export default class User {
     this._id = vId;
   }
 
+  set friends(vFriends: Array<User>) {
+    this._friends = vFriends;
+  }
+
   private addDiverDay(diverday: DiverDay): void {
     this.diverdays.push(diverday);
+  }
+
+  public addFriend(friend: User): void {
+    this.friends.push(friend);
   }
 
   public async celebDiverDay(
@@ -220,7 +234,7 @@ export default class User {
     }
   }
 
-  async comprobUser(): Promise<"IEP" | string | "ERR"> {
+  public async comprobUser(): Promise<"IEP" | string | "ERR"> {
     const loadComp = toast.loading("Iniciando sesión...");
     try {
       const compU = await fetch(`${import.meta.env.VITE_H}/users/compUser`, {
@@ -250,7 +264,7 @@ export default class User {
     }
   }
 
-  static async getInfo(userId: string): Promise<boolean | User> {
+  public static async getInfo(userId: string): Promise<boolean | User> {
     const loadComp = toast.loading("Cargando...");
     try {
       const compU = await fetch(`${import.meta.env.VITE_H}/users/getInfo`, {
