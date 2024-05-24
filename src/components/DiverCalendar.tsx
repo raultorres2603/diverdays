@@ -33,65 +33,115 @@ export const DiverCalendar = () => {
 
   const cancelButtonRef = useRef(null);
 
+  /**
+   * Adds a diver day for the user.
+   *
+   * This function calculates the current diver count for the user and checks if the
+   * diver day is greater or equal to the current diver count. If it is, it calls
+   * the `actDiverDay` method of the user object to add the diver day. If it is not,
+   * it logs an error message and displays an alert to the user.
+   *
+   * @returns {void}
+   */
   function addDiverDay(): void {
+    // Calculate the current diver count for the user
     const diverCount = Math.round(
       (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
     );
+
+    // Check if the diver day is greater or equal to the diver count
     if (diverday && diverday.diverDay >= diverCount) {
       try {
+        // Add the diver day for the user
         user.actDiverDay(diverday);
       } catch (error) {
         console.log(error);
       }
     } else {
       console.log(diverday, diverCount);
-      alert("DiverDay tiene que se superior a tu total");
+      // Display an alert to the user if the diver day is not valid
+      alert("DiverDay tiene que ser superior a tu total");
     }
   }
 
+  /**
+   * Checks the diver day against the current date to determine if it has already
+   * passed, is today, or is still to come.
+   *
+   * @param {DiverDay} diverday - The diver day to be checked.
+   * @return {string} Returns "past" if the diver day has passed, "today" if it is
+   * today, and "tomorrow" if it is still to come.
+   */
   function comprobDiverDay(diverday: DiverDay): string {
+    // Calculate the number of days between the diver day and today
     const today: number = Math.round(
       (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
     );
     const difference: number = today - diverday.diverDay;
-    console.log(difference);
+
+    // Check if the diver day has passed, is today, or is still to come
     if (difference > 0) {
-      return "past";
+      return "past"; // diver day has passed
     } else if (difference == 0) {
-      return "today";
+      return "today"; // diver day is today
     } else {
-      return "tomorrow";
+      return "tomorrow"; // diver day is still to come
     }
   }
 
+  /**
+   * Triggers the click event on the "diverFoto" element, which allows the user to select
+   * photos for their diver day.
+   *
+   * @return {void} This function does not return anything.
+   */
   function addDiverPhotos(): void {
+    // Get the element with the id "diverFoto" and trigger its click event
+    // This opens the file selection dialog for the user to choose photos
     document.getElementById("diverFoto")?.click();
   }
 
+  /**
+   * Celebrates the selected diver day with the provided photos.
+   *
+   * This function calls the `celebDiverDay` method of the user object, passing
+   * the selected diver day and the array of photos.
+   *
+   * @return {void} This function does not return anything.
+   */
   function celebDiverday(): void {
+    // Celebrate the selected diver day with the provided photos
     user.celebDiverDay(selectedDiver, diverPhotos);
   }
 
-  function pushDiverPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+  /**
+   * Handles the event when a photo is added to the diver day.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event object containing the file(s) chosen by the user.
+   * @return {void} This function does not return anything.
+   */
+  function pushDiverPhoto(e: React.ChangeEvent<HTMLInputElement>): void {
+    // Check if the chosen file exceeds the maximum size limit
     if (e.target.files && e.target.files[0].size > 1000000) {
-      toast.error("Tamaño de imagen demasiado grande.");
+      toast.error("Tamaño de imagen demasiado grande."); // Display an error message if the file size is too large
       return;
     }
 
+    // Check if the number of photos already added to the diver day exceeds the limit
     if (diverPhotos.length >= 4) {
-      toast.error("Solo puedes subir 4 fotos.");
+      toast.error("Solo puedes subir 4 fotos."); // Display an error message if the photo limit is reached
       return;
     }
 
+    // Check if a file was actually chosen by the user
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0]); // Read the chosen file as a data URL
       reader.onload = () => {
         if (reader.result) {
-          setDiverPhotos([...diverPhotos, reader.result as string]);
+          setDiverPhotos([...diverPhotos, reader.result as string]); // Add the data URL of the chosen file to the array of photos for the diver day
         }
       };
-      return;
     }
   }
 

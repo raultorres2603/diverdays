@@ -19,6 +19,13 @@ export default class User {
   private _diverdays: Array<DiverDay>;
   private _friends: Array<User>;
 
+  /**
+   * Initializes a new instance of the User class.
+   *
+   * @param {string} vEmail - The email address of the user.
+   * @param {string} vPass - The password of the user.
+   * @param {string} [vId] - The optional ID of the user.
+   */
   constructor(
     public vEmail: string,
     public vPass: string,
@@ -37,74 +44,164 @@ export default class User {
     this._friends = [];
   }
 
+  /**
+   * Returns the name of the user.
+   *
+   * @return {string} The name of the user.
+   */
   public get name(): string {
     return this._name;
   }
 
+  /**
+   * Returns an array of DiverDay objects representing the diverdays of the user.
+   *
+   * @return {DiverDay[]} An array of DiverDay objects representing the diverdays of the user.
+   */
   public get diverdays(): DiverDay[] {
     return this._diverdays;
   }
 
+  /**
+   * Returns the first name of the user.
+   *
+   * @return {string} The first name of the user.
+   */
   public get fname(): string {
     return this._fname;
   }
 
+  /**
+   * Returns the birthday of the user as a Date object.
+   *
+   * @return {Date} The birthday of the user.
+   */
   public get birthday(): Date {
     return this._birthday;
   }
 
+  /**
+   * Returns the avatar URL of the user.
+   *
+   * @return {string} The URL of the user's avatar.
+   */
   public get avatar(): string {
     return this._avatar;
   }
 
+  /**
+   * Returns the genre of the user.
+   *
+   * @return {string} The genre of the user.
+   */
   public get genre(): string {
     return this._genre;
   }
 
+  /**
+   * Returns the profile of the user.
+   *
+   * @return {string} The profile of the user.
+   */
   public get profile(): string {
     return this._profile;
   }
 
+  /**
+   * Returns the email address of the user.
+   *
+   * @return {string} The email address of the user.
+   */
   public get email(): string {
     return this._email;
   }
 
+  /**
+   * Returns the id of the object.
+   *
+   * @return {string} The id of the object.
+   */
   public get id(): string {
     return this._id;
   }
 
+  /**
+   * Returns the password of the user.
+   *
+   * @return {string} The password of the user.
+   */
   public get password(): string {
     return this._password;
   }
 
+  /**
+   * Returns the array of friends of the user.
+   *
+   * @return {Array<User>} The array of friends of the user.
+   */
   public get friends(): Array<User> {
     return this._friends;
   }
 
+  /**
+   * Sets the value of the name property.
+   *
+   * @param {string} vName - The new value for the name property.
+   */
   set name(vName: string) {
     this._name = vName;
   }
 
+  /**
+   * Sets the value of the fname property.
+   *
+   * @param {string} vFname - The new value for the fname property.
+   */
   set fname(vFname: string) {
     this._fname = vFname;
   }
 
+  /**
+   * Sets the value of the diverdays property.
+   *
+   * @param {Array<DiverDay>} vDiverdays - The new value for the diverdays property.
+   */
   set diverdays(vDiverdays: Array<DiverDay>) {
     this._diverdays = vDiverdays;
   }
 
+  /**
+   * Sets the value of the birthday property.
+   *
+   * @param {Date} vBirthday - The new value for the birthday property.
+   */
   set birthday(vBirthday: Date) {
     this._birthday = vBirthday;
   }
 
+  /**
+   * Sets the value of the avatar property.
+   *
+   * @param {string} vAvatar - The new value for the avatar property.
+   */
   set avatar(vAvatar: string) {
     this._avatar = vAvatar;
   }
 
+  /**
+   * Sets the value of the genre property.
+   *
+   * @param {string} vGenre - The new value for the genre property.
+   */
   set genre(vGenre: string) {
     this._genre = vGenre;
   }
 
+  /**
+   * Sets the value of the profile property.
+   *
+   * @param {string} vProfile - The new value for the profile property.
+   */
   set profile(vProfile: string) {
     this._profile = vProfile;
   }
@@ -124,20 +221,42 @@ export default class User {
     this._friends = vFriends;
   }
 
+  /**
+   * Adds a new DiverDay to the list of diverdays.
+   *
+   * @param {DiverDay} diverday - The DiverDay object to be added.
+   * @return {void} This function does not return anything.
+   */
   private addDiverDay(diverday: DiverDay): void {
     this.diverdays.push(diverday);
   }
 
+  /**
+   * Adds a new friend to the list of friends.
+   *
+   * @param {User} friend - The User object representing the friend to be added.
+   * @return {void} This function does not return anything.
+   */
   public addFriend(friend: User): void {
     this.friends.push(friend);
   }
 
+  /**
+   * Asynchronously updates a diver day for a user and adds photos to it.
+   *
+   * @param {DiverDay} diverday - The diver day to be updated.
+   * @param {string[]} diverPhotos - The photos to be added to the diver day.
+   * @return {Promise<void>} A promise that resolves when the update is complete.
+   */
   public async celebDiverDay(
     diverday: DiverDay,
     diverPhotos: string[]
   ): Promise<void> {
+    // Show loading toast
     const loadComp = toast.loading("Actualizando diversario...");
+
     try {
+      // Make API request to update diver day
       const updateU = await fetch(
         `${import.meta.env.VITE_H}/users/celebDiverDay`,
         {
@@ -152,19 +271,32 @@ export default class User {
           }),
         }
       );
+
+      // Get response from API
       const response = await updateU.json();
+
+      // If the response is successful, show success toast and resolve promise
       if (response.res == "OK") {
         toast.dismiss(loadComp);
         toast.success("Diversario anadido!");
       }
     } catch (err) {
+      // If the API request fails, show error toast and reject promise
       toast.dismiss(loadComp);
       toast.error("No se ha podido actualizar el diversario!");
     }
   }
+  /**
+   * Adds a diver day to the user's profile and shows appropriate toasts based on the response.
+   * @param {DiverDay} diverday - The diver day to add.
+   * @return {Promise<boolean>} A promise that resolves to a boolean indicating whether the addition was successful or not.
+   */
   public async actDiverDay(diverday: DiverDay): Promise<boolean> {
+    // Show loading toast
     const loadComp = toast.loading("Añadiendo diversario...");
+
     try {
+      // Make API request to add diver day
       const updateU = await fetch(
         `${import.meta.env.VITE_H}/users/addDiverDay`,
         {
@@ -178,22 +310,32 @@ export default class User {
           }),
         }
       );
+
+      // Get response from API
       const response = await updateU.json();
+
+      // Determine success or failure of addition based on response
       if (response.res == "OK") {
+        // Add diver day to user's profile
+        this.addDiverDay(diverday);
+
+        // Show success toast and resolve promise
         toast.dismiss(loadComp);
         toast.success("Diversario añadido!");
-        this.addDiverDay(diverday);
         return true;
       } else if (response.res == "EXISTS") {
+        // Show error toast and resolve promise
         toast.dismiss(loadComp);
         toast.error("Ya existe este diversario");
         return false;
       } else {
+        // Show error toast and resolve promise
         toast.dismiss(loadComp);
         toast.error("Error al añadir el diversario");
         return false;
       }
     } catch (err) {
+      // Show error toast and reject promise
       console.log(err);
       toast.dismiss(loadComp);
       toast.error("Error al anadir el diversario");
@@ -201,9 +343,41 @@ export default class User {
     }
   }
 
-  public async updateU(): Promise<void> {
-    const loadComp = toast.loading("Actualizando...");
+  public async logOut(advice?: boolean): Promise<void> {
+    let loadComp;
+    if (advice) {
+      loadComp = toast.loading("Cerrando sesión...");
+    }
+    // Show loading toast
     try {
+      // Make API request to log out user
+      await fetch(`${import.meta.env.VITE_H}/users/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: this.id,
+        }),
+      });
+      toast.dismiss(loadComp);
+    } catch (err) {
+      toast.dismiss(loadComp);
+      toast.error("No se ha podido ejecutar el cierre de sesión");
+    }
+  }
+
+  /**
+   * Asynchronously updates a user's information in the database.
+   *
+   * @return {Promise<void>} A promise that resolves when the update is complete.
+   */
+  public async updateU(): Promise<void> {
+    // Show loading toast
+    const loadComp = toast.loading("Actualizando...");
+
+    try {
+      // Make API request to update user
       const updateUser = await fetch(`${import.meta.env.VITE_H}/users/update`, {
         method: "POST",
         headers: {
@@ -219,24 +393,41 @@ export default class User {
           profile: this.profile,
         }),
       });
+
+      // Get response from API
       const response = await updateUser.json();
-      console.log(response);
+
+      // Determine success or failure of update based on response
       if (response.res == "OK") {
+        // Show success toast and resolve promise
         toast.dismiss(loadComp);
         toast.success("Usuario actualizado");
       } else {
+        // Show error toast and resolve promise
         toast.dismiss(loadComp);
         toast.error("Error al actualizar usuario");
       }
     } catch {
+      // Show error toast and reject promise
       toast.dismiss(loadComp);
       toast.error("Error al conectar a la base de datos");
     }
   }
 
+  /**
+   * Asynchronously compares the user's email and password with the ones stored in the database.
+   * If the email and password are correct, it returns the user's session token.
+   * If the email and password are incorrect, it returns "IEP".
+   * If there is an error, it returns "ERR".
+   *
+   * @return {Promise<"IEP" | string | "ERR">} A promise that resolves to the session token, "IEP", or "ERR".
+   */
   public async comprobUser(): Promise<"IEP" | string | "ERR"> {
-    const loadComp = toast.loading("Iniciando sesión...");
+    // Show loading toast
+    const loadComp = toast.loading("Iniciando sesión...");
+
     try {
+      // Make API request to compare user's email and password with the ones stored in the database
       const compU = await fetch(`${import.meta.env.VITE_H}/users/compUser`, {
         method: "POST",
         headers: {
@@ -249,24 +440,44 @@ export default class User {
       });
       const response = await compU.json();
       console.log(response);
+
+      // Determine success or failure of comparison based on response
       if (response.res == "IEP") {
-        toast.error("Email o contraseña incorrectos");
+        // Show error toast and return "IEP"
+        toast.error("Email o contraseña incorrectos");
         return "IEP";
+      } else if (response.res == "UID") {
+        // Show error toast and return "ERR"
+        toast.error("Sesión ya iniciada");
+
+        return "ERR";
       } else {
-        toast.success("Sesión iniciada");
+        // Show success toast and return the session token
+        toast.success("Sesión iniciada");
         return response.res;
       }
     } catch (error) {
+      // Show error toast and return "ERR"
       toast.error("Error al iniciar sesión");
       return "ERR";
     } finally {
+      // Dismiss loading toast
       toast.dismiss(loadComp);
     }
   }
 
+  /**
+   * Asynchronously retrieves user information from the database based on the provided user ID.
+   *
+   * @param {string} userId - The ID of the user whose information is to be retrieved.
+   * @return {Promise<boolean | User>} A promise that resolves to either a `User` object representing the user's information or `false` if an error occurred.
+   */
   public static async getInfo(userId: string): Promise<boolean | User> {
+    // Show loading toast
     const loadComp = toast.loading("Cargando...");
+
     try {
+      // Make API request to retrieve user information
       const compU = await fetch(`${import.meta.env.VITE_H}/users/getInfo`, {
         method: "POST",
         headers: {
@@ -276,20 +487,32 @@ export default class User {
           userId: userId,
         }),
       });
+
       try {
+        // Parse the response as JSON
         const response = await compU.json();
+
+        // Dismiss loading toast
         toast.dismiss(loadComp);
         console.log(response);
+
+        // Set the prototype of the response object to `User.prototype` and return the resulting object
         return Object.setPrototypeOf(response, User.prototype) as User;
       } catch (error) {
+        // Log the error and show error toast
         console.log(error);
         toast.dismiss(loadComp);
         toast.error("Error al convertir JSON");
+
+        // Return `false` to indicate an error occurred
         return false;
       }
     } catch (error) {
+      // Log the error and show error toast
       toast.dismiss(loadComp);
-      toast.error("Error al iniciar sesión");
+      toast.error("Error al obtener información del usuario");
+
+      // Return `false` to indicate an error occurred
       return false;
     }
   }
