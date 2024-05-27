@@ -26,7 +26,7 @@ export const Login = () => {
             //maxAge: 3600,
             sameSite: true,
             path: "/",
-            maxAge: 1800,
+            maxAge: 3600000,
           });
           setLoginIn(false);
           break;

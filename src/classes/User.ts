@@ -291,7 +291,7 @@ export default class User {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: this.id,
+            token: this.token,
             diverday: diverday,
             diverPhotos: diverPhotos,
           }),
@@ -331,7 +331,7 @@ export default class User {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: this.id,
+            token: this.token,
             diverday: diverday,
           }),
         }
@@ -383,7 +383,7 @@ export default class User {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: this.id,
+          token: this.token,
         }),
       });
       toast.dismiss(loadComp);
@@ -410,13 +410,13 @@ export default class User {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: this.id,
           name: this.name,
           fname: this.fname,
           birthday: this.birthday,
           avatar: this.avatar,
           genre: this.genre,
           profile: this.profile,
+          token: this.token,
         }),
       });
 
@@ -462,7 +462,7 @@ export default class User {
         body: JSON.stringify({
           email: this.email,
           pass: this.password,
-          token: this._token,
+          token: this.token,
         }),
       });
       const response = await compU.json();
@@ -529,7 +529,13 @@ export default class User {
         // Dismiss loading toast
         toast.dismiss(loadComp);
         console.log(response);
-
+        if (response.res == "!PVER") {
+          toast.error("No se ha podido verificar el token de autenticación");
+          return false;
+        } else if (response.res == "TOKERR") {
+          document.cookie =
+            "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
         // Set the prototype of the response object to `User.prototype` and return the resulting object
         return Object.setPrototypeOf(response, User.prototype) as User;
       } catch (error) {
