@@ -533,11 +533,13 @@ export default class User {
         // Set the prototype of the response object to `User.prototype` and return the resulting object
         return Object.setPrototypeOf(response, User.prototype) as User;
       } catch (error) {
+        console.log(error);
         // Log the error and show error toast
         console.log(error);
         toast.dismiss(loadComp);
-        toast.error("Error al convertir JSON");
-
+        toast.error("Error de token");
+        document.cookie =
+          "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         // Return `false` to indicate an error occurred
         return false;
       }
@@ -545,7 +547,6 @@ export default class User {
       // Log the error and show error toast
       toast.dismiss(loadComp);
       toast.error("Error al obtener información del usuario");
-
       // Return `false` to indicate an error occurred
       return false;
     }
