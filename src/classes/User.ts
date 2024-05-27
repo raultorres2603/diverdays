@@ -18,6 +18,7 @@ export default class User {
   private _profile: string;
   private _diverdays: Array<DiverDay>;
   private _friends: Array<User>;
+  private _token: string | undefined;
 
   /**
    * Initializes a new instance of the User class.
@@ -42,6 +43,7 @@ export default class User {
     this._profile = "";
     this._diverdays = [];
     this._friends = [];
+    this._token = "";
   }
 
   /**
@@ -69,6 +71,15 @@ export default class User {
    */
   public get fname(): string {
     return this._fname;
+  }
+
+  /**
+   * Returns the token of the user.
+   *
+   * @return {string} The token of the user.
+   */
+  public get token(): string {
+    return this._token;
   }
 
   /**
@@ -168,6 +179,21 @@ export default class User {
    */
   set diverdays(vDiverdays: Array<DiverDay>) {
     this._diverdays = vDiverdays;
+  }
+
+  /**
+   * Sets the value of the token property.
+   *
+   * @param {string} vToken - The new value for the token property.
+   */
+  set token(vToken: string) {
+    /**
+     * Sets the value of the token property. The token is used to authenticate
+     * the user in the API.
+     *
+     * @param {string} vToken - The new value for the token property.
+     */
+    this._token = vToken;
   }
 
   /**
@@ -436,6 +462,7 @@ export default class User {
         body: JSON.stringify({
           email: this.email,
           pass: this.password,
+          token: this._token,
         }),
       });
       const response = await compU.json();
@@ -449,7 +476,14 @@ export default class User {
       } else if (response.res == "UID") {
         // Show error toast and return "ERR"
         toast.error("Sesión ya iniciada");
-
+        return "ERR";
+      } else if (response.res == "NEQ") {
+        // Show error toast and return "ERR"
+        toast.error("Has de esperar a poded iniciar sesión");
+        return "ERR";
+      } else if (response.res == "!PVER") {
+        // Show error toast and return "ERR"
+        toast.error("No se ha podido verificar el token de autenticación");
         return "ERR";
       } else {
         // Show success toast and return the session token
