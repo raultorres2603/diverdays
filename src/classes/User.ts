@@ -78,7 +78,7 @@ export default class User {
    *
    * @return {string} The token of the user.
    */
-  public get token(): string {
+  public get token(): string | undefined {
     return this._token;
   }
 
