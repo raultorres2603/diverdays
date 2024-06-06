@@ -553,6 +553,8 @@ export default class User {
       // Log the error and show error toast
       toast.dismiss(loadComp);
       toast.error("Error al obtener información del usuario");
+      document.cookie =
+        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       // Return `false` to indicate an error occurred
       return false;
     }

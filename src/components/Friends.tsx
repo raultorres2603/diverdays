@@ -1,6 +1,7 @@
 import {
   ArrowLeftEndOnRectangleIcon,
   BackwardIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { mContext } from "../contexts/MainContext";
@@ -24,13 +25,14 @@ export const Friends = () => {
               Amistades
             </h1>
           </div>
-          <div className="friendsCont">
-            <div className="grid grid-cols-3 lg:grid-cols-4 h-72 lg:h-80 overflow-auto border-double border-8 border-sky-700 dark:border-sky-200 p-3 rounded-lg">
+          <div className="friendsCont border-double border-8 border-sky-700 dark:border-sky-200 p-3 rounded-lg relative">
+            <PlusCircleIcon className="transition ease-in-out w-14 h-auto top-0 left-0 dark:text-sky-400 text-sky-700 hover:scale-125 active:scale-100 active:text-sky-500" />
+            <div className="grid grid-cols-3 lg:grid-cols-4 h-72 lg:h-80 overflow-auto">
               {user && user.friends && user.friends.length > 0 && (
                 <>
                   {user.friends.map((friend, i) => (
                     <div className="friend" key={i}>
-                      <button value={friend.id}>{friend.id}</button>
+                      <button value={friend.id}>{friend.name}</button>
                     </div>
                   ))}
                 </>
