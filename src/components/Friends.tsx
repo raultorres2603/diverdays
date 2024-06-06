@@ -8,11 +8,13 @@ import { mContext } from "../contexts/MainContext";
 import Skeleton from "react-loading-skeleton";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import User from "../classes/User";
 export const Friends = () => {
   const { setView, loading, user } = useContext(mContext) || {
     setView: () => {},
   };
   const [openFriendReq, setOpenFriendReq] = useState(false);
+  const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   return (
     <div>
       {loading ? (
@@ -96,6 +98,31 @@ export const Friends = () => {
                         >
                           Agrega a una persona
                         </Dialog.Title>
+                        <div className="searcher grid grid-cols-2 gap-4 mt-4">
+                          <input
+                            type="text"
+                            name="uName"
+                            id="uName"
+                            className="transition ease-in-out text-sm lg:text-lg rounded-lg text-center hover:scale-105"
+                            placeholder="Usuario"
+                          />
+                          <button
+                            type="button"
+                            className="transition ease-in-out rounded-lg bg-sky-700 dark:bg-sky-500 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
+                          >
+                            Buscar
+                          </button>
+                        </div>
+                        <div className="mt-4">
+                          <div className="searchedUsers border border-8 border-double min-h-32 border-sky-700 dark:border-sky-400">
+                            {searchedUsers &&
+                              searchedUsers.map((user, i) => (
+                                <div className="user" key={i}>
+                                  <button value={user.id}>{user.name}</button>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
