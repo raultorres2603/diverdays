@@ -10,10 +10,14 @@ import { ReactCookieProps } from "react-cookie";
 import { useCookies } from "react-cookie";
 import User from "../classes/User";
 
+interface CustomCookies extends ReactCookieProps {
+  session: string;
+}
+
 type ContextType = {
   view: number | null;
   setView: Dispatch<SetStateAction<number | null>>;
-  cookies: ReactCookieProps;
+  cookies: CustomCookies | undefined;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
   loading: boolean;

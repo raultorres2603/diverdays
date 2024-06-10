@@ -559,4 +559,31 @@ export default class User {
       return false;
     }
   }
+
+  public static async searchUser(
+    session: string | undefined,
+    search: string
+  ): Promise<void> {
+    // Show loading toast
+    const loadComp = toast.loading("Buscando...");
+    try {
+      // Make API request to retrieve user information
+      const compU = await fetch(`${import.meta.env.VITE_H}/users/searchUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: session,
+          search: search,
+        }),
+      });
+    } catch (error) {
+      // Log the error and show error toast
+      toast.dismiss(loadComp);
+      toast.error("Error al obtener información del usuario");
+      document.cookie =
+        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  }
 }

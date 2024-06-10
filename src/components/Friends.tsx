@@ -10,11 +10,19 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import User from "../classes/User";
 export const Friends = () => {
-  const { setView, loading, user } = useContext(mContext) || {
+  const { setView, loading, user, cookies } = useContext(mContext) || {
     setView: () => {},
   };
   const [openFriendReq, setOpenFriendReq] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
+  const [search, setSearch] = useState<string>("");
+
+  function findUsers(): void {
+    if (search.length > 0) {
+      User.searchUser(cookies?.session as string, search);
+    }
+  }
+
   return (
     <div>
       {loading ? (
@@ -105,16 +113,20 @@ export const Friends = () => {
                             id="uName"
                             className="transition ease-in-out text-sm lg:text-lg rounded-lg text-center hover:scale-105"
                             placeholder="Usuario"
+                            onChange={(e) => {
+                              setSearch(e.target.value);
+                            }}
                           />
                           <button
                             type="button"
                             className="transition ease-in-out rounded-lg bg-sky-700 dark:bg-sky-500 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
+                            onClick={findUsers()}
                           >
                             Buscar
                           </button>
                         </div>
                         <div className="mt-4">
-                          <div className="searchedUsers border border-8 border-double min-h-32 border-sky-700 dark:border-sky-400">
+                          <div className="searchedUsers border border-8 border-double min-h-32 max-h-32 overflow-auto border-sky-700 dark:border-sky-400">
                             {searchedUsers &&
                               searchedUsers.map((user, i) => (
                                 <div className="user" key={i}>
