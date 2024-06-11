@@ -563,7 +563,7 @@ export default class User {
   public static async searchUser(
     session: string | undefined,
     search: string
-  ): Promise<void> {
+  ): Promise<boolean | User> {
     // Show loading toast
     const loadComp = toast.loading("Buscando...");
     try {
@@ -578,12 +578,39 @@ export default class User {
           search: search,
         }),
       });
+      try {
+        const response = await compU.json();
+        if (response.res == "!PVER") {
+          toast.error("No se ha podido verificar el token de autenticación");
+          return false;
+        } else if (response.res == "TOKERR") {
+          document.cookie =
+            "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          toast.dismiss(loadComp);
+          toast.success("Sesión caducada");
+          return false;
+        } else if (response.res == "NOUSERS") {
+          toast.dismiss(loadComp);
+          toast.error("No se han encontrado usuarios");
+          return false;
+        } else {
+          // devolver aquí los usuarios
+          toast.dismiss(loadComp);
+          toast.success(`${response.res.length} usuarios encontrados`);
+          return response.res;
+        }
+      } catch (error) {
+        toast.dismiss(loadComp);
+        toast.error("Error al obtener usuarios");
+        return false;
+      }
     } catch (error) {
       // Log the error and show error toast
       toast.dismiss(loadComp);
       toast.error("Error al obtener información del usuario");
       document.cookie =
         "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      return false;
     }
   }
 }

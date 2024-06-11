@@ -17,9 +17,18 @@ export const Friends = () => {
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   const [search, setSearch] = useState<string>("");
 
-  function findUsers(): void {
+  async function findUsers(): Promise<User[] | undefined> {
     if (search.length > 0) {
-      User.searchUser(cookies?.session as string, search);
+      try {
+        const users = await User.searchUser(cookies?.session as string, search);
+        console.log(users);
+        if (users instanceof Array) {
+          setSearchedUsers(users);
+          return users;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -120,7 +129,7 @@ export const Friends = () => {
                           <button
                             type="button"
                             className="transition ease-in-out rounded-lg bg-sky-700 dark:bg-sky-500 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
-                            onClick={findUsers()}
+                            onClick={() => findUsers()}
                           >
                             Buscar
                           </button>
