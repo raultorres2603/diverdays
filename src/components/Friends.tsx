@@ -135,13 +135,29 @@ export const Friends = () => {
                           </button>
                         </div>
                         <div className="mt-4">
-                          <div className="searchedUsers border border-8 border-double min-h-32 max-h-32 overflow-auto border-sky-700 dark:border-sky-400">
-                            {searchedUsers &&
-                              searchedUsers.map((user, i) => (
-                                <div className="user" key={i}>
-                                  <button value={user.id}>{user.name}</button>
-                                </div>
-                              ))}
+                          <div className="searchedUsers border border-8 border-double min-h-48 max-h-48 overflow-auto border-sky-700 dark:border-sky-400">
+                            {searchedUsers && (
+                              <div className="grid grid-cols-2 m-2 gap-2">
+                                {searchedUsers.map((user, i) => (
+                                  <button
+                                    type="button"
+                                    className="transition ease-in-out text-sm lg:text-lg rounded-lg text-center hover:scale-105 active:scale-90 hover:scale-110 hover:shadow-lg hover:shadow-sky-300/50 hover:border-5 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
+                                    key={i}
+                                  >
+                                    <img
+                                      src={
+                                        user.avatar
+                                          ? user.avatar
+                                          : "https://cdn-icons-png.freepik.com/256/149/149071.png?semt=ais_hybrid"
+                                      }
+                                      alt=""
+                                      className="rounded-lg mb-2"
+                                    />{" "}
+                                    {user.name} {user.fname}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
