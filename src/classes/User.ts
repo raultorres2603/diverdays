@@ -263,8 +263,24 @@ export default class User {
    * @param {User} friend - The User object representing the friend to be added.
    * @return {void} This function does not return anything.
    */
-  public addFriend(friend: User): void {
+  public async addFriend(friend: User): Promise<boolean> {
     this.friends.push(friend);
+    try {
+      await fetch(`${import.meta.env.VITE_H}/users/addFriend`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: this.token,
+          friend: friend,
+        }),
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   /**

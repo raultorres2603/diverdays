@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import User from "../classes/User";
+import toast from "react-hot-toast";
 export const Friends = () => {
   const { setView, loading, user, cookies } = useContext(mContext) || {
     setView: () => {},
@@ -27,6 +28,22 @@ export const Friends = () => {
           return users;
         }
       } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  async function addFriend(userF: User) {
+    console.log(userF);
+    if (user) {
+      const loading = toast.loading("Añadiendo amistad...");
+      try {
+        await user.addFriend(userF);
+        toast.dismiss(loading);
+        toast.success("Amistad añadida");
+      } catch (error) {
+        toast.dismiss(loading);
+        toast.error("Error al añadir amistad");
         console.log(error);
       }
     }
@@ -138,22 +155,30 @@ export const Friends = () => {
                           <div className="searchedUsers border border-8 border-double min-h-48 max-h-48 overflow-auto border-sky-700 dark:border-sky-400">
                             {searchedUsers && (
                               <div className="grid grid-cols-2 m-2 gap-2">
-                                {searchedUsers.map((user, i) => (
+                                {searchedUsers.map((userF, i) => (
                                   <button
                                     type="button"
                                     className="transition ease-in-out text-sm lg:text-lg rounded-lg text-center hover:scale-105 active:scale-90 hover:scale-110 hover:shadow-lg hover:shadow-sky-300/50 hover:border-5 active:shadow-xl active:shadow-sky-300/50 active:border-5 "
                                     key={i}
+                                    onClick={() => {
+                                      addFriend(
+                                        Object.setPrototypeOf(
+                                          userF,
+                                          User.prototype
+                                        )
+                                      );
+                                    }}
                                   >
                                     <img
                                       src={
-                                        user.avatar
-                                          ? user.avatar
+                                        userF.avatar
+                                          ? userF.avatar
                                           : "https://cdn-icons-png.freepik.com/256/149/149071.png?semt=ais_hybrid"
                                       }
                                       alt=""
                                       className="rounded-lg mb-2"
                                     />{" "}
-                                    {user.name} {user.fname}
+                                    {userF.name} {userF.fname}
                                   </button>
                                 ))}
                               </div>
