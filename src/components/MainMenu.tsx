@@ -88,7 +88,22 @@ export const MainMenu = () => {
           >
             <UserGroupIcon
               className="w-full h-1/2"
-              onClick={() => setView(4)}
+              onClick={async () => {
+                setLoading(true);
+                setView(4);
+                try {
+                  const info = await User.getInfo(cookies?.session as string);
+                  if (typeof info === "boolean") {
+                    // Handle boolean case
+                  } else {
+                    setUser(info);
+                  }
+                  setLoading(false);
+                } catch (error) {
+                  setLoading(false);
+                  console.log(error);
+                }
+              }}
             />
           </button>
         </div>

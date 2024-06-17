@@ -68,12 +68,17 @@ export const Friends = () => {
               onClick={() => setOpenFriendReq(true)}
               className="transition ease-in-out w-14 h-auto top-0 left-0 dark:text-sky-400 text-sky-700 hover:scale-125 active:scale-100 active:text-sky-500"
             />
-            <div className="grid grid-cols-3 lg:grid-cols-4 h-72 lg:h-80 overflow-auto">
+            <div className="grid grid-cols-4 lg:grid-cols-8 h-72 w-auto lg:h-80 overflow-auto mt-4">
               {user && user.friends && user.friends.length > 0 && (
                 <>
                   {user.friends.map((friend, i) => (
                     <div className="friend" key={i}>
-                      <button value={friend.id}>{friend.name}</button>
+                      <button
+                        className="transition ease-in-out bg-sky-700 dark:bg-zinc-900 dark:hover:bg-sky-400 dark:hover:text-zinc-900 hover:bg-sky-500 text-white rounded-lg p-2 active:scale-90 hover:scale-105"
+                        value={friend.id}
+                      >
+                        {friend.name}
+                      </button>
                     </div>
                   ))}
                 </>
@@ -154,7 +159,7 @@ export const Friends = () => {
                         <div className="mt-4">
                           <div className="searchedUsers border border-8 border-double min-h-48 max-h-48 overflow-auto border-sky-700 dark:border-sky-400">
                             {searchedUsers && (
-                              <div className="grid grid-cols-2 m-2 gap-2">
+                              <div className="grid grid-cols-2 m-2 gap-2 lg:grid-cols-4">
                                 {searchedUsers.map((userF, i) => (
                                   <button
                                     type="button"

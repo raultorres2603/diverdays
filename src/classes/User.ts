@@ -266,7 +266,7 @@ export default class User {
   public async addFriend(friend: User): Promise<boolean> {
     this.friends.push(friend);
     try {
-      await fetch(`${import.meta.env.VITE_H}/users/addFriend`, {
+      const req = await fetch(`${import.meta.env.VITE_H}/users/addFriend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -276,7 +276,10 @@ export default class User {
           friend: friend,
         }),
       });
-      return true;
+      const resp = await req.json();
+      if ((resp.res as string) == "OK") {
+        return true;
+      }
     } catch (error) {
       console.log(error);
       return false;
