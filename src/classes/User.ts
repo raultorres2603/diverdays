@@ -279,6 +279,8 @@ export default class User {
       const resp = await req.json();
       if ((resp.res as string) == "OK") {
         return true;
+      } else {
+        return false;
       }
     } catch (error) {
       console.log(error);
