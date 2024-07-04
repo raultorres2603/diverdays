@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import User from "../classes/User";
 import { mContext } from "../contexts/MainContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export const MainMenu = () => {
   const { cookies, setView, setUser, setLoading, user } = useContext(
@@ -19,6 +19,18 @@ export const MainMenu = () => {
     user: new User("", ""),
     setLoading: () => {},
   };
+  const [friendsRequests, setFriendsRequests] = useState<number>(0);
+
+  useEffect(() => {
+    setFriendsRequests(0);
+    // for each friend not accepted
+    user.friends.map((friend) => {
+      if (friend.accepted === false) {
+        setFriendsRequests(friendsRequests + 1);
+      }
+    });
+  }, [user?.friends]);
+
   return (
     <>
       <h1 className="text-6xl font-bold dark:text-sky-200 text-sky-700 select-none mb-3	">
@@ -84,8 +96,13 @@ export const MainMenu = () => {
         <div>
           <button
             type="button"
-            className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5"
+            className="rounded-lg text-white transition ease-in-out bg-sky-700 dark:bg-zinc-900 hover:bg-sky-500 active:scale-90 hover:scale-110 hover:shadow-xl hover:shadow-sky-300/50 hover:border-5 active:bg-sky-500 active:shadow-xl active:shadow-sky-300/50 active:border-5 relative"
           >
+            {friendsRequests > 0 ? (
+              <div className="rounded-full absolute top-0 right-0 bg-amber-500 dark:bg-amber-400 dark:text-zinc-900 text-lg p-1">
+                {friendsRequests}
+              </div>
+            ) : null}
             <UserGroupIcon
               className="w-full h-1/2"
               onClick={async () => {

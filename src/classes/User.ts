@@ -14,7 +14,9 @@ export default class User {
   private _fname: string;
   private _birthday: Date;
   private _avatar: string;
+  private _accepted: boolean;
   private _genre: string;
+  private _alias: string;
   private _profile: string;
   private _diverdays: Array<DiverDay>;
   private _friends: Array<User>;
@@ -36,9 +38,11 @@ export default class User {
     this._email = vEmail;
     this._password = vPass;
     this._name = "";
+    this._alias = "";
     this._fname = "";
     this._birthday = new Date();
     this._avatar = "";
+    this._accepted = false;
     this._genre = "";
     this._profile = "";
     this._diverdays = [];
@@ -62,6 +66,24 @@ export default class User {
    */
   public get diverdays(): DiverDay[] {
     return this._diverdays;
+  }
+
+  /**
+   * Returns the acceptance status of the user.
+   *
+   * @return {boolean} The acceptance status of the user.
+   */
+  public get accepted(): boolean {
+    return this._accepted;
+  }
+
+  /**
+   * Returns the alias of the user.
+   *
+   * @return {string} The alias of the user.
+   */
+  public get alias(): string {
+    return this._alias;
   }
 
   /**
@@ -170,6 +192,24 @@ export default class User {
    */
   set fname(vFname: string) {
     this._fname = vFname;
+  }
+
+  /**
+   * Sets the value of the accepted property.
+   *
+   * @param {boolean} vAccepted - The new value for the accepted property.
+   */
+  set accepted(vAccepted: boolean) {
+    this._accepted = vAccepted;
+  }
+
+  /**
+   * Sets the value of the alias property.
+   *
+   * @param {string} vAlias - The new value for the alias property.
+   */
+  set alias(vAlias: string) {
+    this._alias = vAlias;
   }
 
   /**
