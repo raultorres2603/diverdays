@@ -33,6 +33,18 @@ export const Friends = () => {
     }
   }
 
+  function seeProfile(userF: User) {
+    // see info of friend
+    if (user) {
+      user.friendss.map((friend) => {
+        Object.setPrototypeOf(friend, User.prototype);
+        if (friend.id === userF.id) {
+          console.log(friend);
+        }
+      });
+    }
+  }
+
   async function addFriend(userF: User) {
     console.log(userF);
     if (user) {
@@ -79,6 +91,7 @@ export const Friends = () => {
                             ? "bg-sky-700 dark:bg-zinc-900 dark:hover:bg-sky-400 dark:hover:text-zinc-900 hover:bg-sky-500 text-white"
                             : "bg-amber-400 dark:bg-amber-400 dark:hover:bg-amber-500 dark:hover:text-zinc-900 hover:bg-amber-500 text-zinc-900 cursor-not-allowed"
                         } rounded-lg p-2 active:scale-90 hover:scale-105`}
+                        onClick={() => seeProfile(friend)}
                         value={friend.id}
                       >
                         {friend.alias}

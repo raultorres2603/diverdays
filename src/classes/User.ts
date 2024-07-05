@@ -20,6 +20,7 @@ export default class User {
   private _profile: string;
   private _diverdays: Array<DiverDay>;
   private _friends: Array<User>;
+  private _friendss: Array<User>;
   private _token: string | undefined;
 
   /**
@@ -47,6 +48,7 @@ export default class User {
     this._profile = "";
     this._diverdays = [];
     this._friends = [];
+    this._friendss = [];
     this._token = "";
   }
 
@@ -57,6 +59,15 @@ export default class User {
    */
   public get name(): string {
     return this._name;
+  }
+
+  /**
+   * Returns an array of User objects representing the friends of the user.
+   *
+   * @return {User[]} An array of User objects representing the friends of the user.
+   */
+  public get friendss(): User[] {
+    return this._friendss;
   }
 
   /**
@@ -213,6 +224,15 @@ export default class User {
   }
 
   /**
+   * Sets the value of the friendss property.
+   *
+   * @param {Array<User>} vFriendss - The new value for the friendss property.
+   */
+  set friendss(vFriendss: Array<User>) {
+    this._friendss = vFriendss;
+  }
+
+  /**
    * Sets the value of the diverdays property.
    *
    * @param {Array<DiverDay>} vDiverdays - The new value for the diverdays property.
@@ -279,7 +299,7 @@ export default class User {
     this._password = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 
-  set id(vId: string) {
+  private set id(vId: string) {
     this._id = vId;
   }
 
@@ -294,6 +314,9 @@ export default class User {
    * @return {void} This function does not return anything.
    */
   private addDiverDay(diverday: DiverDay): void {
+    if (!this.diverdays) {
+      this.diverdays = [];
+    }
     this.diverdays.push(diverday);
   }
 
@@ -304,6 +327,9 @@ export default class User {
    * @return {void} This function does not return anything.
    */
   public async addFriend(friend: User): Promise<boolean> {
+    if (!this.friends) {
+      this.friends = [];
+    }
     this.friends.push(friend);
     try {
       const req = await fetch(`${import.meta.env.VITE_H}/users/addFriend`, {

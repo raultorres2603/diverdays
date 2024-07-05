@@ -24,7 +24,7 @@ export const MainMenu = () => {
   useEffect(() => {
     setFriendsRequests(0);
     // for each friend not accepted
-    user.friends.map((friend) => {
+    user?.friends?.map((friend) => {
       if (friend.accepted === false) {
         setFriendsRequests(friendsRequests + 1);
       }
