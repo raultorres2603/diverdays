@@ -15,8 +15,10 @@ export const Friends = () => {
     setView: () => {},
   };
   const [openFriendReq, setOpenFriendReq] = useState(false);
+  const [openAcceptFriend, setOpenAcceptFriend] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   const [search, setSearch] = useState<string>("");
+  const [friendSelected, setFriendSelected] = useState<User | null>(null);
 
   async function findUsers(): Promise<User[] | undefined> {
     if (search.length > 0) {
@@ -33,7 +35,21 @@ export const Friends = () => {
     }
   }
 
-  function seeProfile(userF: User) {
+  function acceptFriend(friend: User): void {
+    if (user) {
+      setFriendSelected(friend);
+      setOpenAcceptFriend(true);
+    }
+  }
+
+  function declineOrAcceptFriend(friend: User | null, accept: boolean): void {
+    if (user) {
+      console.log(friend, accept);
+      // The accepted state on mongoDB on friend's array, it must be changed to accept the friend, if it's not setted the friend.accepted, the other must accept you
+    }
+  }
+
+  function seeProfile(userF: User): void {
     // see info of friend
     if (user) {
       user.friendss.map((friend) => {
@@ -91,7 +107,13 @@ export const Friends = () => {
                             ? "bg-sky-700 dark:bg-zinc-900 dark:hover:bg-sky-400 dark:hover:text-zinc-900 hover:bg-sky-500 text-white"
                             : "bg-amber-400 dark:bg-amber-400 dark:hover:bg-amber-500 dark:hover:text-zinc-900 hover:bg-amber-500 text-zinc-900 cursor-not-allowed"
                         } rounded-lg p-2 active:scale-90 hover:scale-105`}
-                        onClick={() => seeProfile(friend)}
+                        onClick={() =>
+                          friend.accepted
+                            ? seeProfile(friend)
+                            : friend.accepted === false
+                            ? acceptFriend(friend)
+                            : alert("Tienes que esperar a que te acepte.")
+                        } // see info of friend if it's accepted or put a modal to accept or not
                         value={friend.id}
                       >
                         {friend.alias}
@@ -207,6 +229,71 @@ export const Friends = () => {
                             )}
                           </div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+      <Transition.Root show={openAcceptFriend} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={setOpenAcceptFriend}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="dark:bg-slate-800 bg-sky-900 text-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 justify-center flex">
+                    <div className="sm:flex sm:items-start">
+                      <div className="text-center sm:ml-4 sm:mt-0 sm:text-left mb-5">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-white font-semibold leading-6"
+                        >
+                          ¿Quiéres aceptar esta solicitud de
+                          {" " + friendSelected?.alias}
+                        </Dialog.Title>
+                      </div>
+                      <div className="acceptOrNot grid grid-cols-2 gap-4">
+                        <button
+                          type="button"
+                          className="acceptButton w-full text-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
+                        >
+                          Aceptar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            declineOrAcceptFriend(friendSelected, true)
+                          }
+                          className="denyButton w-full text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                        >
+                          Declinar
+                        </button>
                       </div>
                     </div>
                   </div>
