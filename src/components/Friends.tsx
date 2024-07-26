@@ -282,13 +282,16 @@ export const Friends = () => {
                         <button
                           type="button"
                           className="acceptButton w-full text-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
+                          onClick={() =>
+                            declineOrAcceptFriend(friendSelected, true)
+                          }
                         >
                           Aceptar
                         </button>
                         <button
                           type="button"
                           onClick={() =>
-                            declineOrAcceptFriend(friendSelected, true)
+                            declineOrAcceptFriend(friendSelected, false)
                           }
                           className="denyButton w-full text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                         >
