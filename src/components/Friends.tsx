@@ -43,9 +43,13 @@ export const Friends = () => {
   }
 
   function declineOrAcceptFriend(friend: User | null, accept: boolean): void {
-    if (user) {
+    if (user && friend) {
       console.log(friend, accept);
-      // The accepted state on mongoDB on friend's array, it must be changed to accept the friend, if it's not setted the friend.accepted, the other must accept you
+      try {
+        user.acceptFriend(friend, accept);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -68,7 +72,6 @@ export const Friends = () => {
       try {
         await user.addFriend(userF);
         toast.dismiss(loading);
-        toast.success("Amistad añadida");
       } catch (error) {
         toast.dismiss(loading);
         toast.error("Error al añadir amistad");
@@ -100,7 +103,7 @@ export const Friends = () => {
               {user && user.friends && user.friends.length > 0 && (
                 <>
                   {user.friends.map((friend, i) => (
-                    <div className="friend" key={i}>
+                    <div className="friend w-full" key={i}>
                       <button
                         className={`transition ease-in-out ${
                           friend.accepted

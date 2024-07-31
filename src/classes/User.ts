@@ -344,6 +344,10 @@ export default class User {
       });
       const resp = await req.json();
       if ((resp.res as string) == "OK") {
+        toast.success("Amistad agregado");
+        return true;
+      } else if ((resp.res as string) == "EXISTS") {
+        toast.error("Ya tienes de amistad a esta persona");
         return true;
       } else {
         return false;
@@ -474,6 +478,48 @@ export default class User {
         }),
       });
       toast.dismiss(loadComp);
+    } catch (err) {
+      toast.dismiss(loadComp);
+      toast.error("No se ha podido ejecutar el cierre de sesión");
+    }
+  }
+
+  public async acceptFriend(friend: User, accepted: boolean): Promise<void> {
+    // Show loading toast
+    const loadComp = toast.loading("Actualizando...");
+    try {
+      // Make API request to update user
+      const updateUser = await fetch(
+        `${import.meta.env.VITE_H}/users/acceptFriend`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: this.token,
+            friend: friend,
+            accepted: accepted,
+          }),
+        }
+      );
+      const response = await updateUser.json();
+      if (response.res == "OK") {
+        toast.dismiss(loadComp);
+        toast.success("Solicitud aceptada");
+        if (this.token) {
+          User.getInfo(this.token);
+        }
+      } else if (response.res == "OK_NO") {
+        toast.dismiss(loadComp);
+        toast.success("Solicitud no aceptada");
+        if (this.token) {
+          User.getInfo(this.token);
+        }
+      } else {
+        toast.dismiss(loadComp);
+        toast.error("Error al aceptar la solicitud");
+      }
     } catch (err) {
       toast.dismiss(loadComp);
       toast.error("No se ha podido ejecutar el cierre de sesión");
