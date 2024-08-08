@@ -14,11 +14,12 @@ export const Friends = () => {
   const { setView, loading, user, cookies } = useContext(mContext) || {
     setView: () => {},
   };
-  const [openFriendReq, setOpenFriendReq] = useState(false);
-  const [openAcceptFriend, setOpenAcceptFriend] = useState(false);
+  const [openFriendReq, setOpenFriendReq] = useState<boolean>(false);
+  const [openAcceptFriend, setOpenAcceptFriend] = useState<boolean>(false);
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   const [search, setSearch] = useState<string>("");
   const [friendSelected, setFriendSelected] = useState<User | null>(null);
+  const [openFriendProf, setOpenFriendProf] = useState<boolean>(false);
 
   async function findUsers(): Promise<User[] | undefined> {
     if (search.length > 0) {
@@ -53,13 +54,17 @@ export const Friends = () => {
     }
   }
 
-  function seeProfile(userF: User): void {
+  function seeProfile(friendSel: User): void {
     // see info of friend
     if (user) {
       user.friendss.map((friend) => {
         Object.setPrototypeOf(friend, User.prototype);
-        if (friend.id === userF.id) {
+        // console.log(friend);
+        if (friend.id === friendSel.id) {
           console.log(friend);
+          setFriendSelected(friend);
+          // open profile
+          setOpenFriendProf(true);
         }
       });
     }
@@ -145,6 +150,50 @@ export const Friends = () => {
           </div>
         </div>
       )}
+      <Transition.Root show={openFriendProf} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setOpenFriendProf}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="dark:bg-slate-800 bg-sky-900 text-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 justify-center flex">
+                    <div className="sm:flex sm:items-start">
+                      <div className="text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-white font-semibold leading-6"
+                        >
+                          Perfil de {friendSelected?.name}
+                        </Dialog.Title>
+                        <div className="bodyProfile"></div>
+                      </div>
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
       <Transition.Root show={openFriendReq} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={setOpenFriendReq}>
           <Transition.Child
