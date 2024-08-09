@@ -1,7 +1,7 @@
 import md5 from "crypto-js/md5";
 import toast from "react-hot-toast";
 
-type DiverDay = {
+export type DiverDay = {
   diverDay: number;
   diverPhotos: Array<string>;
 };

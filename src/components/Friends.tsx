@@ -10,6 +10,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import User from "../classes/User";
 import toast from "react-hot-toast";
+import { DiverDay } from "../classes/User";
 export const Friends = () => {
   const { setView, loading, user, cookies } = useContext(mContext) || {
     setView: () => {},
@@ -180,11 +181,68 @@ export const Friends = () => {
                       <div className="text-center sm:ml-4 sm:mt-0 sm:text-left">
                         <Dialog.Title
                           as="h3"
-                          className="text-white font-semibold leading-6"
+                          className="text-white font-semibold leading-6 mb-2"
                         >
                           Perfil de {friendSelected?.name}
                         </Dialog.Title>
-                        <div className="bodyProfile"></div>
+                        <hr />
+                        <div className="bodyProfile mt-4">
+                          <div className="imgProfile">
+                            <img
+                              src={friendSelected?.avatar}
+                              className="w-full h-auto rounded-full"
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 mt-5">
+                            <div className="name text-sm text-emerald-400">
+                              Nombre:{" "}
+                              <div className="dark:text-white">
+                                {friendSelected?.name}
+                              </div>
+                            </div>
+                            <div className="fname text-sm text-emerald-400 ">
+                              Apellido:{" "}
+                              <div className="dark:text-white">
+                                {friendSelected?.fname}
+                              </div>
+                            </div>
+                            {friendSelected?.birthday && (
+                              <div className="birthday text-sm text-emerald-400">
+                                Cumpleaños:{" "}
+                                <div className="dark:text-white">
+                                  {new Date(
+                                    friendSelected.birthday
+                                  ).toLocaleDateString("en-GB")}
+                                </div>
+                              </div>
+                            )}
+                            <div className="email text-sm text-emerald-400">
+                              Email:{" "}
+                              <div className="dark:text-white">
+                                {friendSelected?.email}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="grid grid-rows-1 mt-4">
+                            {friendSelected?.diverdays && (
+                              <div className="diverdays text-sm text-emerald-400">
+                                DiverDays:{" "}
+                                <div className="grid grid-cols-4 border border-emerald-400 p-2 rounded grid-child overflow-scroll h-28 gap-4">
+                                  {friendSelected?.diverdays
+                                    .sort((a, b) => a.diverDay - b.diverDay)
+                                    .map((diverday: DiverDay) => (
+                                      <button
+                                        key={diverday.diverDay}
+                                        className="dark:text-slate-800 text-center w-full rounded dark:bg-emerald-400"
+                                      >
+                                        {diverday.diverDay}
+                                      </button>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

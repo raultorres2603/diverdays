@@ -45,6 +45,7 @@ export const Login = () => {
       <div className="grid grid-rows-1 gap-10 mt-9 lg:justify-center">
         <input
           type="email"
+          name="email"
           id={"email"}
           className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 lg:w-100 lg:text-3xl text-white ${
             loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
@@ -58,6 +59,7 @@ export const Login = () => {
           <>
             <input
               type="password"
+              name="password"
               id={"pass"}
               className={`form-control p-4 text-center text-2xl transition ease-in-out focus:scale-105 hover:scale-105 lg:w-100 lg:w-100 lg:text-3xl text-white ${
                 loginIn ? "animate-pulse bg-slate-400 opacity-50" : ""
