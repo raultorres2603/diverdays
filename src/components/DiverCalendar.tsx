@@ -46,7 +46,11 @@ export const DiverCalendar = () => {
   function addDiverDay(): void {
     // Calculate the current diver count for the user
     const diverCount = Math.round(
-      (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
+      (new Date().getTime() - new Date(user.birthday).getTime()) /
+        1000 /
+        24 /
+        60 /
+        60
     );
 
     // Check if the diver day is greater or equal to the diver count
@@ -75,7 +79,11 @@ export const DiverCalendar = () => {
   function comprobDiverDay(diverday: DiverDay): string {
     // Calculate the number of days between the diver day and today
     const today: number = Math.round(
-      (new Date() - new Date(user.birthday)) / 1000 / 24 / 60 / 60
+      (new Date().getTime() - new Date(user.birthday).getTime()) /
+        1000 /
+        24 /
+        60 /
+        60
     );
     const difference: number = today - diverday.diverDay;
 
@@ -276,7 +284,8 @@ export const DiverCalendar = () => {
                               type="number"
                               id="diverday"
                               defaultValue={Math.round(
-                                (new Date() - new Date(user.birthday)) /
+                                (new Date().getTime() -
+                                  new Date(user.birthday).getTime()) /
                                   1000 /
                                   24 /
                                   60 /

@@ -39,7 +39,8 @@ export const MainMenu = () => {
       {user.birthday && (
         <div className="mx-auto transition-all ease-in-out text-sm mb-3 mt-2 w-max text-center rounded-lg text-white bg-indigo-700 dark:bg-zinc-500 p-1 opacity-100">
           {Math.round(
-            (new Date() - new Date(user.birthday)) / (1000 * 60 * 60 * 24)
+            (new Date().getTime() - new Date(user.birthday).getTime()) /
+              (1000 * 60 * 60 * 24)
           )}{" "}
           diverdias
         </div>

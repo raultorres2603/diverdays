@@ -22,12 +22,11 @@ type ContextType = {
   setUser: Dispatch<SetStateAction<User>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
-  setCookies: Dispatch<SetStateAction<ReactCookieProps>>;
 };
 
 export const mContext = createContext<ContextType | null>(null);
 export const MainContext = ({ children }: { children: ReactNode }) => {
-  const [cookies, setCookies, removeCookies] = useCookies(["session"]);
+  const [cookies, , removeCookies] = useCookies(["session"]);
   const [view, setView] = useState<number | null>(null);
   const [user, setUser] = useState<User>(new User("", ""));
   const [loading, setLoading] = useState<boolean>(false);
@@ -91,7 +90,7 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
       value={{
         view,
         setView,
-        cookies,
+        cookies: cookies.session ?? ({} as CustomCookies),
         user,
         setUser,
         loading,
