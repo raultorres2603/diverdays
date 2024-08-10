@@ -90,7 +90,7 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
       value={{
         view,
         setView,
-        cookies: cookies.session ?? ({} as CustomCookies),
+        cookies: cookies as CustomCookies,
         user,
         setUser,
         loading,
