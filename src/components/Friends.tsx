@@ -26,14 +26,11 @@ export const Friends = () => {
     if (search.length > 0) {
       try {
         const users = await User.searchUser(cookies?.session as string, search);
-        console.log(users);
         if (users instanceof Array) {
           setSearchedUsers(users);
           return users;
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }
 
@@ -46,12 +43,9 @@ export const Friends = () => {
 
   function declineOrAcceptFriend(friend: User | null, accept: boolean): void {
     if (user && friend) {
-      console.log(friend, accept);
       try {
         user.acceptFriend(friend, accept);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }
 
@@ -62,7 +56,6 @@ export const Friends = () => {
         Object.setPrototypeOf(friend, User.prototype);
         // console.log(friend);
         if (friend.id === friendSel.id) {
-          console.log(friend);
           setFriendSelected(friend);
           // open profile
           setOpenFriendProf(true);
@@ -72,7 +65,6 @@ export const Friends = () => {
   }
 
   async function addFriend(userF: User) {
-    console.log(userF);
     if (user) {
       const loading = toast.loading("Añadiendo amistad...");
       try {
@@ -81,7 +73,6 @@ export const Friends = () => {
       } catch (error) {
         toast.dismiss(loading);
         toast.error("Error al añadir amistad");
-        console.log(error);
       }
     }
   }

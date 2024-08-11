@@ -48,14 +48,10 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
             setLoading(false);
           } catch (error) {
             setLoading(false);
-            console.log(error);
           }
         };
         fetchUser();
-        console.log(cookies);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [cookies]);
 

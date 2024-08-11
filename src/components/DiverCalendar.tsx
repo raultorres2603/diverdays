@@ -58,11 +58,8 @@ export const DiverCalendar = () => {
       try {
         // Add the diver day for the user
         user.actDiverDay(diverday);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else {
-      console.log(diverday, diverCount);
       // Display an alert to the user if the diver day is not valid
       alert("DiverDay tiene que ser superior a tu total");
     }
@@ -292,7 +289,6 @@ export const DiverCalendar = () => {
                                   60
                               )}
                               onInput={(e) => {
-                                console.log(e.currentTarget.value);
                                 setDiverDay({
                                   diverDay: parseInt(e.currentTarget.value),
                                   diverPhotos: [],

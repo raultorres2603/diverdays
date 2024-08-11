@@ -296,7 +296,6 @@ export default class User {
   }
 
   set password(vPass: string) {
-    console.log(import.meta.env.VITE_SK);
     this._password = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 
@@ -354,7 +353,6 @@ export default class User {
         return false;
       }
     } catch (error) {
-      console.log(error);
       return false;
     }
   }
@@ -454,7 +452,6 @@ export default class User {
       }
     } catch (err) {
       // Show error toast and reject promise
-      console.log(err);
       toast.dismiss(loadComp);
       toast.error("Error al anadir el diversario");
       return false;
@@ -600,7 +597,6 @@ export default class User {
         }),
       });
       const response = await compU.json();
-      console.log(response);
 
       // Determine success or failure of comparison based on response
       if (response.res == "IEP") {
@@ -662,7 +658,6 @@ export default class User {
 
         // Dismiss loading toast
         toast.dismiss(loadComp);
-        console.log(response);
         if (response.res == "!PVER") {
           toast.error("No se ha podido verificar el token de autenticación");
           return false;
@@ -673,9 +668,7 @@ export default class User {
         // Set the prototype of the response object to `User.prototype` and return the resulting object
         return Object.setPrototypeOf(response, User.prototype) as User;
       } catch (error) {
-        console.log(error);
         // Log the error and show error toast
-        console.log(error);
         toast.dismiss(loadComp);
         toast.error("Error de token");
         document.cookie =

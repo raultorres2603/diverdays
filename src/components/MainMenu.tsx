@@ -63,7 +63,6 @@ export const MainMenu = () => {
                 setLoading(false);
               } catch (error) {
                 setLoading(false);
-                console.log(error);
               }
             }}
           >
@@ -87,7 +86,6 @@ export const MainMenu = () => {
                 setLoading(false);
               } catch (error) {
                 setLoading(false);
-                console.log(error);
               }
             }}
           >
@@ -119,7 +117,6 @@ export const MainMenu = () => {
                   setLoading(false);
                 } catch (error) {
                   setLoading(false);
-                  console.log(error);
                 }
               }}
             />

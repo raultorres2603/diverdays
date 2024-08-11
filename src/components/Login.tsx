@@ -22,7 +22,6 @@ export const Login = () => {
           setLoginIn(false);
           break;
         default:
-          console.log(cookies);
           setCookies("session", uLog, {
             //maxAge: 3600,
             sameSite: true,
@@ -34,7 +33,6 @@ export const Login = () => {
       }
     } catch (error) {
       setLoginIn(false);
-      console.log(error);
     }
   };
 

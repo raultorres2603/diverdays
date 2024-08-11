@@ -21,35 +21,27 @@ export const Profile = () => {
   const updateUser: () => Promise<void> = async () => {
     try {
       await user?.updateU();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleUpdate: FormEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e
   ) => {
-    console.log(e);
     switch ((e.target as HTMLInputElement | HTMLSelectElement).id) {
       case "fname":
         user.fname = (e.target as HTMLInputElement).value;
-        console.log(user);
         break;
       case "name":
         user.name = (e.target as HTMLInputElement).value;
-        console.log(user);
         break;
       case "birthday":
         user.birthday = new Date((e.target as HTMLInputElement).value);
-        console.log(user);
         break;
       case "genre":
         user.genre = (e.target as HTMLSelectElement).value;
-        console.log(user);
         break;
       case "profile":
         user.profile = (e.target as HTMLSelectElement).value;
-        console.log(user);
         break;
       default:
         break;
@@ -67,12 +59,10 @@ export const Profile = () => {
     }
 
     if (e.target.files) {
-      console.log(e.target.files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
         if (reader.result) {
-          console.log(reader.result);
           user.avatar = reader.result as string;
           toast.success("Imagen actualizada");
         }
