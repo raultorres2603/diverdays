@@ -296,6 +296,7 @@ export default class User {
   }
 
   set password(vPass: string) {
+    console.log(import.meta.env.VITE_SK);
     this._password = md5(import.meta.env.VITE_SK + vPass).toString();
   }
 

@@ -10,6 +10,7 @@ export const Login = () => {
 
   const createUser = async (email: string, pass: string) => {
     const u = new User(email, pass);
+    u.password = pass;
     setLoginIn(true);
     try {
       const uLog = await u.comprobUser();
