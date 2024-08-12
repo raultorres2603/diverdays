@@ -72,8 +72,13 @@ export const Friends = () => {
     if (user) {
       const loading = toast.loading("Añadiendo amistad...");
       try {
-        await user.addFriend(userF);
-        toast.dismiss(loading);
+        if (userF.id !== user.id) {
+          await user.addFriend(userF);
+          toast.dismiss(loading);
+        } else {
+          toast.dismiss(loading);
+          toast.error("No puedes agregarte a ti mismo");
+        }
       } catch (error) {
         toast.dismiss(loading);
         toast.error("Error al añadir amistad");
