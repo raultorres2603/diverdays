@@ -128,12 +128,6 @@ export const DiverCalendar = () => {
    * @return {void} This function does not return anything.
    */
   function pushDiverPhoto(e: React.ChangeEvent<HTMLInputElement>): void {
-    // Check if the chosen file exceeds the maximum size limit
-    if (e.target.files && e.target.files[0].size > 1000000) {
-      toast.error("Tamaño de imagen demasiado grande."); // Display an error message if the file size is too large
-      return;
-    }
-
     // Check if the number of photos already added to the diver day exceeds the limit
     if (diverPhotos.length >= 4) {
       toast.error("Solo puedes subir 4 fotos."); // Display an error message if the photo limit is reached
