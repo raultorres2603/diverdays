@@ -41,6 +41,9 @@ export const Login = () => {
       <h1 className="text-7xl font-bold dark:text-indigo-300 text-indigo-800 select-none">
         DiverAPP
       </h1>
+      <div className="text-lg italic font-light dark:text-indigo-300 text-indigo-800 select-none">
+        (not in production)
+      </div>
       <div className="grid grid-rows-1 gap-10 mt-9 lg:justify-center">
         <input
           type="email"
