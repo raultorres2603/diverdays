@@ -21,7 +21,9 @@ export const Profile = () => {
   const updateUser: () => Promise<void> = async () => {
     try {
       await user?.updateU();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUpdate: FormEventHandler<HTMLInputElement | HTMLSelectElement> = (

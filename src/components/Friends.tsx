@@ -30,7 +30,9 @@ export const Friends = () => {
           setSearchedUsers(users);
           return users;
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -45,7 +47,9 @@ export const Friends = () => {
     if (user && friend) {
       try {
         user.acceptFriend(friend, accept);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

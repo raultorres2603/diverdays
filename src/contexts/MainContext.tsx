@@ -51,7 +51,9 @@ export const MainContext = ({ children }: { children: ReactNode }) => {
           }
         };
         fetchUser();
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+      }
     }
   }, [cookies]);
 
